@@ -1,23 +1,23 @@
 # Compiled class file
-*.class
+lab3/*.class
 
 # Log file
-*.log
+lab3/*.log
 
 # BlueJ files
-*.ctxt
+lab3/*.ctxt
 
 # Mobile Tools for Java (J2ME)
-.mtj.tmp/
+lab3/.mtj.tmp/
 
 # Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+lab3/*.jar
+lab3/*.war
+lab3/*.nar
+lab3/*.ear
+lab3/*.zip
+lab3/*.tar.gz
+lab3/*.rar
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+lab3/hs_err_pid*

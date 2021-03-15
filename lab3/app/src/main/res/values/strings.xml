@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Lab3</string>
+    <string name="_0">0</string>
+    <string name="punkty">Punkty</string>
+    <string name="zgaduj">Zgaduj</string>
+    <string name="wpisz_liczb">Wpisz liczbę!</string>
+    <string name="gra_losuj_ca">Gra losująca</string>
+</resources>
