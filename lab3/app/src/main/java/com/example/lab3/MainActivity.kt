@@ -1,14 +1,14 @@
 package com.example.lab3
 
-import android.R.color
+import android.content.DialogInterface
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.Color
-import android.graphics.Color.red
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlin.random.Random
 
@@ -55,12 +55,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         renewButton.setOnClickListener {
-            reset(input, yourScore, drawnCount)
+            resetDialog(input, yourScore, drawnCount)
         }
 
         zeroButton.setOnClickListener {
-            score = 0
-            yourScore.text = "0"
+            zeroDialog(yourScore)
         }
     }
 
@@ -71,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun scoring(input: EditText, yourScore: TextView, drawnCount: TextView) {
         var pts = 0
-        when (shotCount) {
+        when (shotCount + 1) {
             1 -> pts = 5
             2 -> pts = 3
             3 -> pts = 3
@@ -83,8 +82,7 @@ class MainActivity : AppCompatActivity() {
             9 -> pts = 1
             10 -> pts = 1
             else -> {
-//                showLost()
-                reset(input, yourScore, drawnCount)
+                loseDialog(input, yourScore, drawnCount)
             }
         }
         points = pts
@@ -96,27 +94,25 @@ class MainActivity : AppCompatActivity() {
         yourScore: TextView,
         drawnCount: TextView
     ): Int? {
+
         when (number) {
             drawnNumber -> {
                 scoring(input, yourScore, drawnCount)
-                Toast.makeText(
-                    applicationContext,
-                    "Trafiłeś! Zdobywasz $points pkt!",
-                    Toast.LENGTH_LONG
-                ).show()
+                winDialog()
                 score += points
                 yourScore.text = "$score"
                 draw()
-                return shotCount
             }
             in 0..20 -> {
                 if (number < drawnNumber) {
-                    val toast = Toast.makeText(applicationContext, "Daj więcej", Toast.LENGTH_LONG)
+                    val toast =
+                        Toast.makeText(applicationContext, "Daj więcej", Toast.LENGTH_SHORT)
                     toast.setGravity(Gravity.TOP, 0, 0)
                     toast.show()
 
                 } else {
-                    val toast = Toast.makeText(applicationContext, "Daj mniej", Toast.LENGTH_LONG)
+                    val toast =
+                        Toast.makeText(applicationContext, "Daj mniej", Toast.LENGTH_SHORT)
                     toast.setGravity(Gravity.TOP, 0, 0)
                     toast.show()
                 }
@@ -124,7 +120,6 @@ class MainActivity : AppCompatActivity() {
                 if (shotCount > 10) {
                     scoring(input, yourScore, drawnCount)
                 }
-                return shotCount
             }
             else -> {
                 println()
@@ -138,6 +133,7 @@ class MainActivity : AppCompatActivity() {
                 return null
             }
         }
+        return shotCount
     }
 
     private fun reset(input: EditText, yourScore: TextView, drawnCount: TextView) {
@@ -146,5 +142,61 @@ class MainActivity : AppCompatActivity() {
         score = 0
         yourScore.text = "0"
         draw()
+    }
+
+    private fun loseDialog(input: EditText, yourScore: TextView, drawnCount: TextView) {
+        val builder = AlertDialog.Builder(this@MainActivity)
+        builder.setTitle("PRZEGRAŁEŚ!")
+        builder.setMessage("Wykorzystałeś wsztstkie możliwe strzały.")
+
+        builder.setPositiveButton("OK") { _: DialogInterface?, _: Int ->
+            reset(input, yourScore, drawnCount)
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun winDialog() {
+        val builder = AlertDialog.Builder(this@MainActivity)
+        val x = shotCount + 1
+        builder.setTitle("WYGRAŁEŚ!")
+        builder.setMessage("Udało Ci się zgadnąć za $x razem.")
+
+        builder.setPositiveButton("OK") { _: DialogInterface?, _: Int -> }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun zeroDialog(yourScore: TextView) {
+        val builder = AlertDialog.Builder(this@MainActivity)
+        builder.setTitle("UWAGA!")
+        builder.setMessage("Czy na pewno chcesz wyzerować swoje punkty?")
+
+        builder.setPositiveButton("TAK") { _: DialogInterface?, _: Int ->
+            score = 0
+            yourScore.text = "0"
+        }
+
+        builder.setNegativeButton("NIE") { _: DialogInterface?, _: Int -> }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun resetDialog(input: EditText, yourScore: TextView, drawnCount: TextView) {
+        val builder = AlertDialog.Builder(this@MainActivity)
+        builder.setTitle("UWAGA!")
+        builder.setMessage("Czy na pewno chcesz rozpocząć nową grę?")
+
+        builder.setPositiveButton("YES") { _: DialogInterface?, _: Int ->
+            reset(input, yourScore, drawnCount)
+        }
+
+        builder.setNegativeButton("NO") { _: DialogInterface?, _: Int -> }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 }
