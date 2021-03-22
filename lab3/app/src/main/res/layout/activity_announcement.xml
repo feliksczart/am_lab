@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/fullscreenBackgroundColor"
+    android:background="#895CD9"
     android:theme="@style/ThemeOverlay.Lab3.FullscreenContainer"
     tools:context=".ActivityAnnouncement">
 
@@ -16,8 +16,8 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:keepScreenOn="true"
-        android:text="@string/dummy_content"
-        android:textColor="?attr/fullscreenTextColor"
+        android:text="@string/gra_losuj_ca"
+        android:textColor="#ffffff"
         android:textSize="50sp"
         android:textStyle="bold" />
 
