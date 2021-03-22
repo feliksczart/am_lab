@@ -10,5 +10,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="nick">Nick</string>
     <string name="password">Password</string>
-    <string name="register">Register?</string>ng>
+    <string name="register">Register?</string>
+    <string name="username">Username</string>
 </resources>
