@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         val yourScore = findViewById<TextView>(R.id.yourScore)
         val input = findViewById<EditText>(R.id.editText)
         val drawnCount = findViewById<TextView>(R.id.drawnCount)
-        val zeroButton = findViewById<Button>(R.id.zeroButton)
 
         guessButton.setOnClickListener {
             val inputText = input.text.toString()
@@ -57,10 +56,6 @@ class MainActivity : AppCompatActivity() {
 
         renewButton.setOnClickListener {
             resetDialog(input, yourScore, drawnCount)
-        }
-
-        zeroButton.setOnClickListener {
-            zeroDialog(yourScore)
         }
     }
 
@@ -165,22 +160,6 @@ class MainActivity : AppCompatActivity() {
         builder.setMessage("Udało Ci się zgadnąć za $x razem.")
 
         builder.setPositiveButton("OK") { _: DialogInterface?, _: Int -> }
-
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
-
-    private fun zeroDialog(yourScore: TextView) {
-        val builder = AlertDialog.Builder(this@MainActivity)
-        builder.setTitle("UWAGA!")
-        builder.setMessage("Czy na pewno chcesz wyzerować swoje punkty?")
-
-        builder.setPositiveButton("TAK") { _: DialogInterface?, _: Int ->
-            score = 0
-            yourScore.text = "0"
-        }
-
-        builder.setNegativeButton("NIE") { _: DialogInterface?, _: Int -> }
 
         val dialog: AlertDialog = builder.create()
         dialog.show()

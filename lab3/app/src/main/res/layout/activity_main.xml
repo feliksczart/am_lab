@@ -102,18 +102,6 @@
                 android:layout_gravity="right"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/zeroButton"
-                    android:layout_width="51dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="@string/_0"
-                    android:textColor="#9871de"
-                    android:textColorHighlight="#FFFFFF"
-                    android:textSize="26sp"
-                    android:textStyle="bold"
-                    app:backgroundTint="#d4d4d4" />
-
                 <ImageButton
                     android:id="@+id/renewButton"
                     android:layout_width="wrap_content"
