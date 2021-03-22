@@ -5,4 +5,7 @@
     <string name="zgaduj">Zgaduj</string>
     <string name="wpisz_liczb">Wpisz liczbę!</string>
     <string name="gra_losuj_ca">Gra losująca</string>
+    <string name="title_activity_announcement">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

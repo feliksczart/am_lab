@@ -9,13 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Lab3">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".ActivityAnnouncement"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_announcement"
+            android:theme="@style/Theme.Lab3.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>

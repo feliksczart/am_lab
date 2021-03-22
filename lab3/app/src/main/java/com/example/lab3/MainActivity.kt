@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
 
         val renewButton = findViewById<ImageButton>(R.id.renewButton)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
