@@ -1,5 +1,6 @@
 package com.example.lab3
 
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
@@ -20,6 +21,7 @@ class GameActivity : AppCompatActivity() {
     var drawnNumber = 0
     var points = 0
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
@@ -37,6 +39,9 @@ class GameActivity : AppCompatActivity() {
         val yourScore = findViewById<TextView>(R.id.yourScore)
         val input = findViewById<EditText>(R.id.editText)
         val drawnCount = findViewById<TextView>(R.id.drawnCount)
+        val displayNick = findViewById<TextView>(R.id.displayNick)
+
+        displayNick.text = "Użytkownik: " + intent.getStringExtra("Username")
 
         guessButton.setOnClickListener {
             val inputText = input.text.toString()

@@ -18,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
         val registerText = findViewById<TextView>(R.id.registerText)
         val username = findViewById<EditText>(R.id.nickLogin)
         val password = findViewById<EditText>(R.id.passwordLogin)
+        val displayNick = findViewById<TextView>(R.id.displayNick)
         val myDB = DBHelper(this)
 
         loginButton.setOnClickListener {
@@ -31,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
                 val checkResult = myDB.checkUserPassword(user,pass)
                 if (checkResult){
                     val intent = Intent(this, GameActivity::class.java)
+                    intent.putExtra("Username",user)
                     startActivity(intent)
                     finish()
                 } else{
