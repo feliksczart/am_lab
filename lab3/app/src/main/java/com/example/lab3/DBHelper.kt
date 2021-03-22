@@ -8,9 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VER) {
 
     companion object {
-        private val DATABASE_VER = 2
-        private val DATABASE_NAME = "Login.db"
-
+        private const val DATABASE_VER = 2
+        private const val DATABASE_NAME = "Login.db"
     }
 
     override fun onCreate(myDB: SQLiteDatabase?) {

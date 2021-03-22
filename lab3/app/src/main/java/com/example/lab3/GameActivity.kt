@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlin.random.Random
 
 
-class MainActivity : AppCompatActivity() {
+class GameActivity : AppCompatActivity() {
 
     var score = 0
     var shotCount = 0
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_game)
         supportActionBar?.hide()
 
         val renewButton = findViewById<ImageButton>(R.id.renewButton)
@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loseDialog(input: EditText, yourScore: TextView, drawnCount: TextView) {
-        val builder = AlertDialog.Builder(this@MainActivity)
+        val builder = AlertDialog.Builder(this@GameActivity)
         builder.setTitle("PRZEGRAŁEŚ!")
         builder.setMessage("Wykorzystałeś wsztstkie możliwe strzały.")
 
@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun winDialog() {
-        val builder = AlertDialog.Builder(this@MainActivity)
+        val builder = AlertDialog.Builder(this@GameActivity)
         val x = shotCount + 1
         builder.setTitle("WYGRAŁEŚ!")
         builder.setMessage("Udało Ci się zgadnąć za $x razem.")
@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resetDialog(input: EditText, yourScore: TextView, drawnCount: TextView) {
-        val builder = AlertDialog.Builder(this@MainActivity)
+        val builder = AlertDialog.Builder(this@GameActivity)
         builder.setTitle("UWAGA!")
         builder.setMessage("Czy na pewno chcesz rozpocząć nową grę?")
 
