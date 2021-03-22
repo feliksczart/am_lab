@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         val renewButton = findViewById<ImageButton>(R.id.renewButton)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             renewButton.drawable.colorFilter =
-                BlendModeColorFilter(Color.parseColor("#9871de"), BlendMode.SRC_ATOP)
+                BlendModeColorFilter(Color.parseColor("#54309a"), BlendMode.SRC_ATOP)
         }
 
         draw()

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#895CD9"
     android:theme="@style/ThemeOverlay.Lab3.FullscreenContainer"
-    tools:context=".ActivityAnnouncement">
+    tools:context=".AnnouncementActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
