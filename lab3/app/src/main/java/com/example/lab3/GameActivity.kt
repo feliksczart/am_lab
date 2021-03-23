@@ -118,7 +118,7 @@ class GameActivity : AppCompatActivity() {
                 winDialog()
                 score += points
                 yourScore.text = "$score"
-                myDB.setCurrPts(username , score, applicationContext)
+                myDB.setCurrPts(username , score)
                 draw()
             }
             in 0..20 -> {
@@ -159,7 +159,7 @@ class GameActivity : AppCompatActivity() {
         drawnCount.text = ""
         score = 0
         yourScore.text = "0"
-        myDB.setCurrPts(username , 0, applicationContext)
+        myDB.setCurrPts(username , 0)
         draw()
     }
 

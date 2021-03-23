@@ -51,7 +51,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return cursor.count > 0
     }
 
-    fun setCurrPts(username: String, currpts: Number, applicationContext: Context) {
+    fun setCurrPts(username: String, currpts: Number) {
         val myDB = this.writableDatabase
         myDB!!.execSQL("update users set currpts = $currpts where username = $username;")
     }
