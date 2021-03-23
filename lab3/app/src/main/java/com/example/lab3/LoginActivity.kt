@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +23,8 @@ class LoginActivity : AppCompatActivity() {
         val myDB = DBHelper(this)
 
         loginButton.setOnClickListener {
-            val user = username.text.toString()
-            val pass = password.text.toString()
+            val user = username.text.toString().toLowerCase(Locale.ROOT)
+            val pass = password.text.toString().toLowerCase(Locale.ROOT)
 
             if (user == "" || pass == "") {
                 Toast.makeText(applicationContext, "Wypełnij wszystkie pola!", Toast.LENGTH_SHORT)

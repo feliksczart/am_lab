@@ -2,6 +2,7 @@ package com.example.lab3
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.Color
@@ -42,13 +43,14 @@ class GameActivity : AppCompatActivity() {
         val input = findViewById<EditText>(R.id.editText)
         val drawnCount = findViewById<TextView>(R.id.drawnCount)
         val displayNick = findViewById<TextView>(R.id.displayNick)
+        val rankingButton = findViewById<TextView>(R.id.rankingButton)
 
-        val myDBreadable = myDB.readableDatabase
+        val myDBwritable = myDB.writableDatabase
         val username = intent.getStringExtra("Username")
 
         displayNick.text = "Użytkownik: $username"
 
-        val cursor = myDBreadable.rawQuery("select currpts from users where username = $username;", null)
+        val cursor = myDBwritable.rawQuery("select currpts from users where username = ?", arrayOf(username))
         try {
             while (cursor.moveToNext()) {
                 val pts = cursor.getInt(cursor.getColumnIndex("currpts")).toString()
@@ -77,6 +79,12 @@ class GameActivity : AppCompatActivity() {
 
         renewButton.setOnClickListener {
             resetDialog(input, yourScore, drawnCount, username.toString())
+        }
+
+        rankingButton.setOnClickListener{
+            val intent = Intent(this, RankingActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
