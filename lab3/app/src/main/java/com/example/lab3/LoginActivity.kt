@@ -15,6 +15,7 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         val loginButton = findViewById<Button>(R.id.loginButton)
+        val rankingButton = findViewById<TextView>(R.id.rankingButton)
         val registerText = findViewById<TextView>(R.id.registerText)
         val username = findViewById<EditText>(R.id.nickLogin)
         val password = findViewById<EditText>(R.id.passwordLogin)
@@ -47,6 +48,12 @@ class LoginActivity : AppCompatActivity() {
 
         registerText.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        rankingButton.setOnClickListener{
+            val intent = Intent(this, RankingActivity::class.java)
             startActivity(intent)
             finish()
         }

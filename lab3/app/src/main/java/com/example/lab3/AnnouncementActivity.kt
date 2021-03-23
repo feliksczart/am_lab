@@ -49,7 +49,8 @@ class AnnouncementActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
-        val myDB = DBHelper(this).writableDatabase
+        val myDB = DBHelper(this)
+        val myDBwritable = myDB.writableDatabase
 //        myDB.execSQL("drop table if exists users")
 //        myDB!!.execSQL("create table users(username text primary key, password text, currpts number, bestpts number);")
 
