@@ -76,6 +76,7 @@ class RegisterActivity : AppCompatActivity() {
 
         rankingButton.setOnClickListener{
             val intent = Intent(this, RankingActivity::class.java)
+            intent.putExtra("From", "Register")
             startActivity(intent)
             finish()
         }

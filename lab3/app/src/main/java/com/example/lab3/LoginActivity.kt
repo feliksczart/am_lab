@@ -55,6 +55,7 @@ class LoginActivity : AppCompatActivity() {
 
         rankingButton.setOnClickListener{
             val intent = Intent(this, RankingActivity::class.java)
+            intent.putExtra("From", "Login")
             startActivity(intent)
             finish()
         }

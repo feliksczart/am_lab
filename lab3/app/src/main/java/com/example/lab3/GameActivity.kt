@@ -84,6 +84,8 @@ class GameActivity : AppCompatActivity() {
 
         rankingButton.setOnClickListener{
             val intent = Intent(this, RankingActivity::class.java)
+            intent.putExtra("From", "Game")
+            intent.putExtra("Username", username)
             startActivity(intent)
             finish()
         }

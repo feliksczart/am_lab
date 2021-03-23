@@ -9,9 +9,9 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#895CD9"
         tools:layout_editor_absoluteX="240dp"
-        tools:layout_editor_absoluteY="186dp"
-        android:background="#895CD9">
+        tools:layout_editor_absoluteY="186dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,4 +53,44 @@
         </LinearLayout>
 
     </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/backGame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/backLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/backRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="invisible" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
