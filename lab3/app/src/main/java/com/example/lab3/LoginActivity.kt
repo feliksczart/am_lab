@@ -24,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
 
         loginButton.setOnClickListener {
             val user = username.text.toString().toLowerCase(Locale.ROOT)
-            val pass = password.text.toString().toLowerCase(Locale.ROOT)
+            val pass = password.text.toString().toLowerCase()
 
             if (user == "" || pass == "") {
                 Toast.makeText(applicationContext, "Wypełnij wszystkie pola!", Toast.LENGTH_SHORT)

@@ -12,6 +12,7 @@ import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import java.util.*
 import kotlin.random.Random
 
 
@@ -46,7 +47,7 @@ class GameActivity : AppCompatActivity() {
         val rankingButton = findViewById<TextView>(R.id.rankingButton)
 
         val myDBwritable = myDB.writableDatabase
-        val username = intent.getStringExtra("Username")
+        val username = intent.getStringExtra("Username")?.toLowerCase(Locale.ROOT)
 
         displayNick.text = "Użytkownik: $username"
 
@@ -167,7 +168,7 @@ class GameActivity : AppCompatActivity() {
         input.text.clear()
         drawnCount.text = ""
         finalScore = score
-        myDB.setBestPts(username , finalScore, applicationContext)
+        myDB.setBestPts(username , finalScore)
         score = 0
         yourScore.text = "0"
         myDB.setCurrPts(username , 0)

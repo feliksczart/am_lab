@@ -3,6 +3,7 @@ package com.example.lab3
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,11 +21,11 @@ class RankingActivity : AppCompatActivity() {
         messageList.adapter = messageAdapter
         messageList.layoutManager = LinearLayoutManager(this)
         val myDB = DBHelper(this)
+        val hashRanking = myDB.getBest10().toSortedMap(compareByDescending() {it})
+        val result = hashRanking.toList().sortedBy { (_, value) -> value}.reversed().toMap()
 
-        val hashRanking = myDB.getBest10()
-
-        for (key in  hashRanking.keys){
-            val new = message("$key", "Punkty: " + hashRanking[key].toString())
+        for (entry in  result){
+            val new = message(entry.key, "Punkty: " + entry.value)
             messageAdapter.addMessage(new)
         }
     }

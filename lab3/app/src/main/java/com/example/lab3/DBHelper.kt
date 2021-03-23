@@ -56,19 +56,19 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     fun setCurrPts(username: String, currpts: Number) {
         val myDB = this.writableDatabase
-        myDB!!.execSQL("update users set currpts = $currpts where username = $username;")
+        myDB!!.execSQL("update users set currpts = ? where username = ?;", arrayOf(currpts, username))
     }
 
-    fun setBestPts(username: String, bestpts: Number, applicationContext: Context) {
+    fun setBestPts(username: String, bestpts: Number) {
         val myDBwritable = this.writableDatabase
         val myDBreadable = this.readableDatabase
 
-        val cursor = myDBreadable.rawQuery("select bestpts from users where username = $username;", null)
+        val cursor = myDBreadable.rawQuery("select bestpts from users where username = ?;", arrayOf(username))
         try {
             while (cursor.moveToNext()) {
                 val prevBest = cursor.getInt(cursor.getColumnIndex("bestpts"))
                 if (prevBest < bestpts.toInt()){
-                    myDBwritable!!.execSQL("update users set bestpts = $bestpts where username = $username;")
+                    myDBwritable!!.execSQL("update users set bestpts = ? where username = ?;", arrayOf(bestpts,username))
                 }
             }
         } finally {
@@ -83,14 +83,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         try {
             while (cursor.moveToNext()) {
-                val user = cursor.getInt(cursor.getColumnIndex("username")).toString()
+                val user = cursor.getString(cursor.getColumnIndex("username"))
                 val scor = cursor.getInt(cursor.getColumnIndex("bestpts"))
                 hashRanking[user] = scor
             }
         } finally {
             cursor.close()
         }
-
         return hashRanking
     }
 }
