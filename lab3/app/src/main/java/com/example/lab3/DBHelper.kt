@@ -56,4 +56,21 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val myDB = this.writableDatabase
         myDB!!.execSQL("update users set currpts = $currpts where username = $username;")
     }
+
+    fun setBestPts(username: String, bestpts: Number, applicationContext: Context) {
+        val myDBwritable = this.writableDatabase
+        val myDBreadable = this.readableDatabase
+
+        val cursor = myDBreadable.rawQuery("select bestpts from users where username = $username;", null)
+        try {
+            while (cursor.moveToNext()) {
+                val prevBest = cursor.getInt(cursor.getColumnIndex("bestpts"))
+                if (prevBest < bestpts.toInt()){
+                    myDBwritable!!.execSQL("update users set bestpts = $bestpts where username = $username;")
+                }
+            }
+        } finally {
+            cursor.close()
+        }
+    }
 }

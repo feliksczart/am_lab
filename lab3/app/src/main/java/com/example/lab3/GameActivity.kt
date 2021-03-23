@@ -21,6 +21,7 @@ class GameActivity : AppCompatActivity() {
     var drawnNumber = 0
     var points = 0
     val myDB = DBHelper(this)
+    var finalScore = 0
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -157,6 +158,8 @@ class GameActivity : AppCompatActivity() {
     private fun reset(input: EditText, yourScore: TextView, drawnCount: TextView, username: String) {
         input.text.clear()
         drawnCount.text = ""
+        finalScore = score
+        myDB.setBestPts(username , finalScore, applicationContext)
         score = 0
         yourScore.text = "0"
         myDB.setCurrPts(username , 0)
