@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.widget.Toast
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VER) {
 
@@ -13,7 +14,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     override fun onCreate(myDB: SQLiteDatabase?) {
-        myDB!!.execSQL("create table users(username text primary key, password text);")
+        myDB!!.execSQL("create table users(username text primary key, password text, currpts number, bestpts number);")
     }
 
     override fun onUpgrade(myDB: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -26,6 +27,8 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val contentValues = ContentValues()
         contentValues.put("username", username)
         contentValues.put("password", password)
+        contentValues.put("currpts", 0)
+        contentValues.put("bestpts", 0)
         val result = myDB.insert("users", null, contentValues)
 
         return !result.equals(-1)
@@ -40,8 +43,16 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     fun checkUserPassword(username: String, password: String): Boolean {
         val myDB = this.writableDatabase
-        val cursor = myDB.rawQuery("select * from users where username = ? and password = ?", arrayOf(username,password))
+        val cursor = myDB.rawQuery(
+            "select * from users where username = ? and password = ?",
+            arrayOf(username, password)
+        )
 
         return cursor.count > 0
+    }
+
+    fun setCurrPts(username: String, currpts: Number, applicationContext: Context) {
+        val myDB = this.writableDatabase
+        myDB!!.execSQL("update users set currpts = $currpts where username = $username;")
     }
 }

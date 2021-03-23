@@ -18,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
         val registerText = findViewById<TextView>(R.id.registerText)
         val username = findViewById<EditText>(R.id.nickLogin)
         val password = findViewById<EditText>(R.id.passwordLogin)
-        val displayNick = findViewById<TextView>(R.id.displayNick)
         val myDB = DBHelper(this)
 
         loginButton.setOnClickListener {
@@ -29,20 +28,24 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Wypełnij wszystkie pola!", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                val checkResult = myDB.checkUserPassword(user,pass)
-                if (checkResult){
+                val checkResult = myDB.checkUserPassword(user, pass)
+                if (checkResult) {
                     val intent = Intent(this, GameActivity::class.java)
-                    intent.putExtra("Username",user)
+                    intent.putExtra("Username", user)
                     startActivity(intent)
                     finish()
-                } else{
-                    Toast.makeText(applicationContext, "Błąd logowania! \n Sprawdz login i hasło.", Toast.LENGTH_SHORT)
+                } else {
+                    Toast.makeText(
+                        applicationContext,
+                        "Błąd logowania! \n Sprawdz login i hasło.",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 }
             }
         }
 
-        registerText.setOnClickListener{
+        registerText.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
             finish()

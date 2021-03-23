@@ -20,6 +20,7 @@ class GameActivity : AppCompatActivity() {
     var shotCount = 0
     var drawnNumber = 0
     var points = 0
+    val myDB = DBHelper(this)
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +42,21 @@ class GameActivity : AppCompatActivity() {
         val drawnCount = findViewById<TextView>(R.id.drawnCount)
         val displayNick = findViewById<TextView>(R.id.displayNick)
 
-        displayNick.text = "Użytkownik: " + intent.getStringExtra("Username")
+        val myDBreadable = myDB.readableDatabase
+        val username = intent.getStringExtra("Username")
+
+        displayNick.text = "Użytkownik: $username"
+
+        val cursor = myDBreadable.rawQuery("select currpts from users where username = $username;", null)
+        try {
+            while (cursor.moveToNext()) {
+                val pts = cursor.getInt(cursor.getColumnIndex("currpts")).toString()
+                yourScore.text = pts
+                score = pts.toInt()
+            }
+        } finally {
+            cursor.close()
+        }
 
         guessButton.setOnClickListener {
             val inputText = input.text.toString()
@@ -52,7 +67,7 @@ class GameActivity : AppCompatActivity() {
                 inputText.toInt()
             }
 
-            val count = check(input, number, yourScore, drawnCount)
+            val count = check(input, number, yourScore, drawnCount, username.toString())
             if (count == 0) drawnCount.text = ""
             else if (count in 1..20) drawnCount.text = count.toString()
 
@@ -60,7 +75,7 @@ class GameActivity : AppCompatActivity() {
         }
 
         renewButton.setOnClickListener {
-            resetDialog(input, yourScore, drawnCount)
+            resetDialog(input, yourScore, drawnCount, username.toString())
         }
     }
 
@@ -69,7 +84,7 @@ class GameActivity : AppCompatActivity() {
         drawnNumber = Random.nextInt(0, 20)
     }
 
-    private fun scoring(input: EditText, yourScore: TextView, drawnCount: TextView) {
+    private fun scoring(input: EditText, yourScore: TextView, drawnCount: TextView, username: String) {
         var pts = 0
         when (shotCount + 1) {
             1 -> pts = 5
@@ -83,7 +98,7 @@ class GameActivity : AppCompatActivity() {
             9 -> pts = 1
             10 -> pts = 1
             else -> {
-                loseDialog(input, yourScore, drawnCount)
+                loseDialog(input, yourScore, drawnCount, username)
             }
         }
         points = pts
@@ -93,15 +108,17 @@ class GameActivity : AppCompatActivity() {
         input: EditText,
         number: Int,
         yourScore: TextView,
-        drawnCount: TextView
+        drawnCount: TextView,
+        username: String
     ): Int? {
 
         when (number) {
             drawnNumber -> {
-                scoring(input, yourScore, drawnCount)
+                scoring(input, yourScore, drawnCount, username)
                 winDialog()
                 score += points
                 yourScore.text = "$score"
+                myDB.setCurrPts(username , score, applicationContext)
                 draw()
             }
             in 0..20 -> {
@@ -119,7 +136,7 @@ class GameActivity : AppCompatActivity() {
                 }
                 shotCount++
                 if (shotCount > 10) {
-                    scoring(input, yourScore, drawnCount)
+                    scoring(input, yourScore, drawnCount, username)
                 }
             }
             else -> {
@@ -137,21 +154,22 @@ class GameActivity : AppCompatActivity() {
         return shotCount
     }
 
-    private fun reset(input: EditText, yourScore: TextView, drawnCount: TextView) {
+    private fun reset(input: EditText, yourScore: TextView, drawnCount: TextView, username: String) {
         input.text.clear()
         drawnCount.text = ""
         score = 0
         yourScore.text = "0"
+        myDB.setCurrPts(username , 0, applicationContext)
         draw()
     }
 
-    private fun loseDialog(input: EditText, yourScore: TextView, drawnCount: TextView) {
+    private fun loseDialog(input: EditText, yourScore: TextView, drawnCount: TextView, username: String) {
         val builder = AlertDialog.Builder(this@GameActivity)
         builder.setTitle("PRZEGRAŁEŚ!")
         builder.setMessage("Wykorzystałeś wsztstkie możliwe strzały.")
 
         builder.setPositiveButton("OK") { _: DialogInterface?, _: Int ->
-            reset(input, yourScore, drawnCount)
+            reset(input, yourScore, drawnCount, username)
         }
 
         val dialog: AlertDialog = builder.create()
@@ -170,13 +188,13 @@ class GameActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun resetDialog(input: EditText, yourScore: TextView, drawnCount: TextView) {
+    private fun resetDialog(input: EditText, yourScore: TextView, drawnCount: TextView, username: String) {
         val builder = AlertDialog.Builder(this@GameActivity)
         builder.setTitle("UWAGA!")
         builder.setMessage("Czy na pewno chcesz rozpocząć nową grę?")
 
         builder.setPositiveButton("YES") { _: DialogInterface?, _: Int ->
-            reset(input, yourScore, drawnCount)
+            reset(input, yourScore, drawnCount, username)
         }
 
         builder.setNegativeButton("NO") { _: DialogInterface?, _: Int -> }
