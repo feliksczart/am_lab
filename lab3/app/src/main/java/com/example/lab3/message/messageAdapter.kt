@@ -15,10 +15,12 @@ class messageAdapter(
     class messageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val rankingUser = itemView.findViewById<TextView>(R.id.rankingUser)
         val rankingScore = itemView.findViewById<TextView>(R.id.rankingScore)
+        val positionText = itemView.findViewById<TextView>(R.id.positionText)
 
         fun bind(curMessage: message){
             rankingUser.text = curMessage.rankingUser
             rankingScore.text = curMessage.rankingScore
+            positionText.text = curMessage.positionText
         }
     }
 

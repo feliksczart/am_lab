@@ -1,10 +1,7 @@
 package com.example.lab3
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab3.message.message
@@ -23,10 +20,11 @@ class RankingActivity : AppCompatActivity() {
         val myDB = DBHelper(this)
         val hashRanking = myDB.getBest10().toSortedMap(compareByDescending() {it})
         val result = hashRanking.toList().sortedBy { (_, value) -> value}.reversed().toMap()
-
+        var c = 1;
         for (entry in  result){
-            val new = message(entry.key, "Punkty: " + entry.value)
+            val new = message(entry.key, "Punkty: " + entry.value, c.toString())
             messageAdapter.addMessage(new)
+            c++
         }
     }
 }
