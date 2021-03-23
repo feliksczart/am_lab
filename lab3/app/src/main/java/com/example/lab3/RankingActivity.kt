@@ -19,9 +19,12 @@ class RankingActivity : AppCompatActivity() {
         val messageList = findViewById<RecyclerView>(R.id.messageList)
         messageList.adapter = messageAdapter
         messageList.layoutManager = LinearLayoutManager(this)
+        val myDB = DBHelper(this)
 
-        for (i in  1..10){
-            val new = message("Nowe Zadanie $i", "siema $i")
+        val hashRanking = myDB.getBest10()
+
+        for (key in  hashRanking.keys){
+            val new = message("$key", "Punkty: " + hashRanking[key].toString())
             messageAdapter.addMessage(new)
         }
     }

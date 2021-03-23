@@ -73,4 +73,22 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             cursor.close()
         }
     }
+
+    fun getBest10(): HashMap<String, Int> {
+        val myDBreadable = this.readableDatabase
+        val hashRanking = HashMap<String, Int>()
+        val cursor = myDBreadable.rawQuery("select username, bestpts from users order by bestpts desc limit 10;", null)
+
+        try {
+            while (cursor.moveToNext()) {
+                val user = cursor.getInt(cursor.getColumnIndex("username")).toString()
+                val scor = cursor.getInt(cursor.getColumnIndex("bestpts"))
+                hashRanking[user] = scor
+            }
+        } finally {
+            cursor.close()
+        }
+
+        return hashRanking
+    }
 }
