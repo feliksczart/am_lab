@@ -3,6 +3,7 @@ package com.example.lab3
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -10,8 +11,10 @@ import android.widget.Toast
 import java.util.*
 
 class LoginActivity : AppCompatActivity() {
+    private val TAG = "LoginActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i(TAG, "onCreate")
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
 
@@ -35,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this, GameActivity::class.java)
                     intent.putExtra("Username", user)
                     startActivity(intent)
-                    finish()
                 } else {
                     Toast.makeText(
                         applicationContext,
@@ -50,14 +52,41 @@ class LoginActivity : AppCompatActivity() {
         registerText.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
-            finish()
         }
 
         rankingButton.setOnClickListener{
             val intent = Intent(this, RankingActivity::class.java)
             intent.putExtra("From", "Login")
             startActivity(intent)
-            finish()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i(TAG, "onStart")
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.i(TAG, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i(TAG, "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.i(TAG, "onRestart")
     }
 }

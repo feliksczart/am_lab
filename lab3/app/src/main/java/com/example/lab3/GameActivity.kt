@@ -8,6 +8,7 @@ import android.graphics.BlendModeColorFilter
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +19,7 @@ import kotlin.random.Random
 
 class GameActivity : AppCompatActivity() {
 
+    private val TAG = "GameActivity"
     var score = 0
     var shotCount = 0
     var drawnNumber = 0
@@ -28,6 +30,7 @@ class GameActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.i(TAG, "onCreate")
         setContentView(R.layout.activity_game)
         supportActionBar?.hide()
 
@@ -87,7 +90,6 @@ class GameActivity : AppCompatActivity() {
             intent.putExtra("From", "Game")
             intent.putExtra("Username", username)
             startActivity(intent)
-            finish()
         }
     }
 
@@ -215,5 +217,34 @@ class GameActivity : AppCompatActivity() {
 
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i(TAG, "onStart")
+    }
+    override fun onResume() {
+        super.onResume()
+        Log.i(TAG, "onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i(TAG, "onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i(TAG, "onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.i(TAG, "onRestart")
     }
 }
