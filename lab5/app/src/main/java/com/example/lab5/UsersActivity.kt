@@ -41,8 +41,9 @@ class UsersActivity : AppCompatActivity() {
                 val initial = splName[0].first().plus(splName[1].first().toString())
 
                 val todoCount = mydb.getTodoCount(allUsers.getInt(allUsers.getColumnIndex("id")))
+                val postCount = mydb.getPostCount(allUsers.getInt(allUsers.getColumnIndex("id")))
 
-                val new = message(initial, name, mail, "Todos: $todoCount", "1")
+                val new = message(initial, name, mail, "Todos: $todoCount", "Posts: $postCount")
                 messageAdapter.addMessage(new)
             }
         }

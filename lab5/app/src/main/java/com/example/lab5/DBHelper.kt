@@ -19,11 +19,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     override fun onCreate(myDB: SQLiteDatabase?) {
         myDB!!.execSQL("create table users(id number primary key, name text, mail text);")
         myDB!!.execSQL("create table todos(id number primary key, userId number, title text, completed text, foreign key(userId) references users(id));")
+        myDB!!.execSQL("create table posts(id number primary key, userId number, title text, body text, foreign key(userId) references users(id));")
     }
 
     override fun onUpgrade(myDB: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         myDB!!.execSQL("drop table if exists users")
         myDB!!.execSQL("drop table if exists todos")
+        myDB!!.execSQL("drop table if exists posts")
         onCreate(myDB!!)
     }
 
@@ -46,6 +48,16 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         myDB.insert("todos", null, contentValues)
     }
 
+    fun insertPost(array: ArrayList<String>) {
+        val myDB = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put("id", array[0])
+        contentValues.put("userId", array[1])
+        contentValues.put("title", array[2])
+        contentValues.put("body", array[3])
+        myDB.insert("posts", null, contentValues)
+    }
+
     fun checkUser(id: String): Boolean {
         val myDB = this.writableDatabase
         val cursor = myDB.rawQuery("select * from users where id = ?", arrayOf(id))
@@ -56,6 +68,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun checkTodo(id: String): Boolean {
         val myDB = this.writableDatabase
         val cursor = myDB.rawQuery("select * from todos where id = ?", arrayOf(id))
+
+        return cursor.count == 0
+    }
+
+    fun checkPost(id: String): Boolean {
+        val myDB = this.writableDatabase
+        val cursor = myDB.rawQuery("select * from posts where id = ?", arrayOf(id))
 
         return cursor.count == 0
     }
@@ -77,6 +96,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun getTodoCount(userId: Number): Int {
         val myDB = this.readableDatabase
         val cursor = myDB.rawQuery("select * from todos where userId = ? and completed = 'false'", arrayOf(userId.toString()))
+
+        return cursor.count
+    }
+
+    fun getPostCount(userId: Number): Int {
+        val myDB = this.readableDatabase
+        val cursor = myDB.rawQuery("select * from posts where userId = ?", arrayOf(userId.toString()))
 
         return cursor.count
     }

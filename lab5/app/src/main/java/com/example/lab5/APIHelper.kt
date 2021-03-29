@@ -76,12 +76,12 @@ class APIHelper {
                     val id = json.getInt("id")
                     val userID = json.getInt("userId")
                     val title = json.getString("title")
-                    val completed = json.getBoolean("completed")
+                    val body = json.getString("body")
 
                     post.add(id.toString())
                     post.add(userID.toString())
                     post.add(title)
-                    post.add(completed.toString())
+                    post.add(body.toString())
                 }
                 iter++
                 posts.add(post)

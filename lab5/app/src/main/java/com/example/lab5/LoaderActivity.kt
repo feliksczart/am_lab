@@ -51,8 +51,10 @@ class LoaderActivity : AppCompatActivity() {
         val myDBwritable = myDB.writableDatabase
 //        myDBwritable.execSQL("drop table if exists users")
 //        myDBwritable.execSQL("drop table if exists todos")
-//        myDBwritable!!.execSQL("create table users(id number primary key, name text, mail text);")
-//        myDBwritable!!.execSQL("create table todos(id number primary key, userId number, title text, completed text, foreign key(userId) references users(id));")
+//        myDBwritable.execSQL("drop table if exists posts")
+        myDBwritable!!.execSQL("create table users(id number primary key, name text, mail text);")
+        myDBwritable!!.execSQL("create table todos(id number primary key, userId number, title text, completed text, foreign key(userId) references users(id));")
+        myDBwritable!!.execSQL("create table posts(id number primary key, userId number, title text, body text, foreign key(userId) references users(id));")
 
         val apiHelper = APIHelper()
         Thread {
