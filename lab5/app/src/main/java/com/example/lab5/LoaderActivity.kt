@@ -47,10 +47,12 @@ class LoaderActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         val loadingCircle = findViewById<ProgressBar>(R.id.loading)
-//        val myDB = DBHelper(this)
-//        val myDBwritable = myDB.writableDatabase
+        val myDB = DBHelper(this)
+        val myDBwritable = myDB.writableDatabase
 //        myDBwritable.execSQL("drop table if exists users")
-//        myDBwritable!!.execSQL("create table users(username text primary key, password text, currpts number, bestpts number);")
+//        myDBwritable.execSQL("drop table if exists todos")
+//        myDBwritable!!.execSQL("create table users(id number primary key, name text, mail text);")
+//        myDBwritable!!.execSQL("create table todos(id number primary key, userId number, title text, completed text, foreign key(userId) references users(id));")
 
         val apiHelper = APIHelper()
         Thread {
@@ -67,6 +69,11 @@ class LoaderActivity : AppCompatActivity() {
                     }
                 }
                 val todos = apiHelper.getTodos("http://jsonplaceholder.typicode.com/todos")
+                for (todo in todos){
+                    if(mydb.checkTodo(todo[1])){
+                        mydb.insertTodo(todo)
+                    }
+                }
             }
             runOnUiThread {
                 loadingCircle?.visibility = View.GONE

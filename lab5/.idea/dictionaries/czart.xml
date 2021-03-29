@@ -2,6 +2,7 @@
   <dictionary name="czart">
     <words>
       <w>mydb</w>
+      <w>todos</w>
     </words>
   </dictionary>
 </component>

@@ -24,8 +24,13 @@ class UsersActivity : AppCompatActivity() {
         messageList.adapter = messageAdapter
         messageList.layoutManager = LinearLayoutManager(this)
 
-        val mydb = DBHelper(this)
+        val x = DBHelper(this)
+        val myDBwritable = x.writableDatabase
+//        myDBwritable.execSQL("drop table if exists users")
+//        myDBwritable.execSQL("drop table if exists users")
+//        myDBwritable!!.execSQL("create table users(username text primary key, password text, currpts number, bestpts number);")
 
+        val mydb = DBHelper(this)
         val allUsers = mydb.getUsers()
 
         if (allUsers != null) {
@@ -35,9 +40,12 @@ class UsersActivity : AppCompatActivity() {
                 val splName = name.split(" ")
                 val initial = splName[0].first().plus(splName[1].first().toString())
 
-                val new = message(initial, name, mail, "1", "1")
+                val todoCount = mydb.getTodoCount(allUsers.getInt(allUsers.getColumnIndex("id")))
+
+                val new = message(initial, name, mail, "Todos: $todoCount", "1")
                 messageAdapter.addMessage(new)
             }
         }
+        mydb.getTodos()
     }
 }

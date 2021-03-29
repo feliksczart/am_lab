@@ -18,10 +18,12 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     override fun onCreate(myDB: SQLiteDatabase?) {
         myDB!!.execSQL("create table users(id number primary key, name text, mail text);")
+        myDB!!.execSQL("create table todos(id number primary key, userId number, title text, completed text, foreign key(userId) references users(id));")
     }
 
     override fun onUpgrade(myDB: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         myDB!!.execSQL("drop table if exists users")
+        myDB!!.execSQL("drop table if exists todos")
         onCreate(myDB!!)
     }
 
@@ -34,9 +36,26 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         myDB.insert("users", null, contentValues)
     }
 
+    fun insertTodo(array: ArrayList<String>) {
+        val myDB = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put("id", array[1])
+        contentValues.put("userId", array[0])
+        contentValues.put("title", array[1])
+        contentValues.put("completed", array[2])
+        myDB.insert("todos", null, contentValues)
+    }
+
     fun checkUser(id: String): Boolean {
         val myDB = this.writableDatabase
         val cursor = myDB.rawQuery("select * from users where id = ?", arrayOf(id))
+
+        return cursor.count == 0
+    }
+
+    fun checkTodo(id: String): Boolean {
+        val myDB = this.writableDatabase
+        val cursor = myDB.rawQuery("select * from todos where id = ?", arrayOf(id))
 
         return cursor.count == 0
     }
@@ -46,5 +65,19 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val cursor = myDB.rawQuery("select * from users",null)
 
         return cursor
+    }
+
+    fun getTodos(): Cursor? {
+        val myDB = this.writableDatabase
+        val cursor = myDB.rawQuery("select * from todos",null)
+
+        return cursor
+    }
+
+    fun getTodoCount(userId: Number): Int {
+        val myDB = this.readableDatabase
+        val cursor = myDB.rawQuery("select * from todos where userId = ? and completed = 'false'", arrayOf(userId.toString()))
+
+        return cursor.count
     }
 }
