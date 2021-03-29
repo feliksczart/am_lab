@@ -14,7 +14,8 @@
         android:theme="@style/Theme.Lab5"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <!--usesCleartextTraffic: internet issue-->
+        <activity android:name=".PostsActivity"></activity>
+        <!-- usesCleartextTraffic: internet issue -->
         <activity
             android:name=".LoaderActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">

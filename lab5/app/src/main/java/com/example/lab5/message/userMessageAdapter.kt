@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lab5.R
 
 
-class messageAdapter(
-    private val messages: MutableList<message>
-) : RecyclerView.Adapter<messageAdapter.messageViewHolder>() {
+class userMessageAdapter(
+    private val messages: MutableList<userMessage>
+) : RecyclerView.Adapter<userMessageAdapter.messageViewHolder>() {
     class messageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val initial = itemView.findViewById<TextView>(R.id.initial)
         val name = itemView.findViewById<TextView>(R.id.name)
@@ -18,7 +18,7 @@ class messageAdapter(
         val tasks = itemView.findViewById<TextView>(R.id.tasks)
         val posts = itemView.findViewById<TextView>(R.id.posts)
 
-        fun bind(curMessage: message){
+        fun bind(curMessage: userMessage){
             initial.text = curMessage.initial
             name.text = curMessage.name
             mail.text = curMessage.mail
@@ -33,8 +33,8 @@ class messageAdapter(
         )
     }
 
-    fun addMessage(message: message) {
-        messages.add(message)
+    fun addMessage(userMessage: userMessage) {
+        messages.add(userMessage)
         notifyItemInserted(messages.size - 1)
     }
 

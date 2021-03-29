@@ -3,10 +3,8 @@ package com.example.lab5
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 import java.util.*
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VER) {
@@ -81,29 +79,47 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     fun getUsers(): Cursor? {
         val myDB = this.writableDatabase
-        val cursor = myDB.rawQuery("select * from users",null)
+        val cursor = myDB.rawQuery("select * from users", null)
 
         return cursor
     }
 
     fun getTodos(): Cursor? {
         val myDB = this.writableDatabase
-        val cursor = myDB.rawQuery("select * from todos",null)
+        val cursor = myDB.rawQuery("select * from todos", null)
+
+        return cursor
+    }
+
+    fun getUserPosts(userId: String): Cursor? {
+        val myDB = this.writableDatabase
+        val cursor = myDB.rawQuery("select * from posts where userId = ?", arrayOf(userId))
 
         return cursor
     }
 
     fun getTodoCount(userId: Number): Int {
         val myDB = this.readableDatabase
-        val cursor = myDB.rawQuery("select * from todos where userId = ? and completed = 'false'", arrayOf(userId.toString()))
+        val cursor = myDB.rawQuery(
+            "select * from todos where userId = ? and completed = 'false'",
+            arrayOf(userId.toString())
+        )
 
         return cursor.count
     }
 
     fun getPostCount(userId: Number): Int {
         val myDB = this.readableDatabase
-        val cursor = myDB.rawQuery("select * from posts where userId = ?", arrayOf(userId.toString()))
+        val cursor =
+            myDB.rawQuery("select * from posts where userId = ?", arrayOf(userId.toString()))
 
         return cursor.count
+    }
+
+    fun getUserName(userId: String): String? {
+        val myDB = this.writableDatabase
+        val cursor = myDB.rawQuery("select name from users where id = ?", arrayOf(userId))
+        cursor.moveToFirst()
+        return cursor.getString(cursor.getColumnIndex("name"))
     }
 }
