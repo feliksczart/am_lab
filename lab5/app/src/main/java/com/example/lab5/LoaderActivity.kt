@@ -68,10 +68,18 @@ class LoaderActivity : AppCompatActivity() {
                         mydb.insertUser(user)
                     }
                 }
+
                 val todos = apiHelper.getTodos("http://jsonplaceholder.typicode.com/todos")
                 for (todo in todos){
-                    if(mydb.checkTodo(todo[1])){
+                    if(mydb.checkTodo(todo[0])){
                         mydb.insertTodo(todo)
+                    }
+                }
+
+                val posts = apiHelper.getPosts("http://jsonplaceholder.typicode.com/posts")
+                for (post in posts){
+                    if(mydb.checkPost(post[0])){
+                        mydb.insertPost(post)
                     }
                 }
             }

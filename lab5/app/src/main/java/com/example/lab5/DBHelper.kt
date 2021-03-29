@@ -39,10 +39,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun insertTodo(array: ArrayList<String>) {
         val myDB = this.writableDatabase
         val contentValues = ContentValues()
-        contentValues.put("id", array[1])
-        contentValues.put("userId", array[0])
-        contentValues.put("title", array[1])
-        contentValues.put("completed", array[2])
+        contentValues.put("id", array[0])
+        contentValues.put("userId", array[1])
+        contentValues.put("title", array[2])
+        contentValues.put("completed", array[3])
         myDB.insert("todos", null, contentValues)
     }
 

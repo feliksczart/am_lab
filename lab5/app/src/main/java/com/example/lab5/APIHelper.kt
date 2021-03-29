@@ -44,10 +44,12 @@ class APIHelper {
                 if (jsonString != "") {
                     val json = JSONObject(jsonString)
 
+                    val id = json.getInt("id")
                     val userID = json.getInt("userId")
                     val title = json.getString("title")
                     val completed = json.getBoolean("completed")
 
+                    todo.add(id.toString())
                     todo.add(userID.toString())
                     todo.add(title)
                     todo.add(completed.toString())
@@ -59,5 +61,34 @@ class APIHelper {
             }
         }
         return todos
+    }
+
+    fun getPosts(url: String): ArrayList<ArrayList<String>> {
+        val posts = ArrayList<ArrayList<String>>()
+        var iter = 1
+        while (true) {
+            try {
+                val post = ArrayList<String>()
+                val jsonString = URL("$url/$iter").readText()
+                if (jsonString != "") {
+                    val json = JSONObject(jsonString)
+
+                    val id = json.getInt("id")
+                    val userID = json.getInt("userId")
+                    val title = json.getString("title")
+                    val completed = json.getBoolean("completed")
+
+                    post.add(id.toString())
+                    post.add(userID.toString())
+                    post.add(title)
+                    post.add(completed.toString())
+                }
+                iter++
+                posts.add(post)
+            } catch (e: FileNotFoundException) {
+                break
+            }
+        }
+        return posts
     }
 }
