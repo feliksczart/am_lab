@@ -1,5 +1,6 @@
 package com.example.lab5
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -7,10 +8,12 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab5.message.postMessage
 import com.example.lab5.message.postMessageAdapter
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -43,6 +46,34 @@ class PostsActivity : AppCompatActivity() {
                 val new = postMessage(title, body)
                 messageAdapter.addMessage(new)
             }
+        }
+
+        val floatingMenu = findViewById<FloatingActionButton>(R.id.floating_action_button)
+        val usersMenu = findViewById<ExtendedFloatingActionButton>(R.id.floating_user_list)
+        val todosMenu = findViewById<ExtendedFloatingActionButton>(R.id.floating_todos)
+
+        usersMenu.isVisible = false
+        usersMenu.isEnabled = false
+        todosMenu.isVisible = false
+        todosMenu.isEnabled = false
+
+        floatingMenu.setOnClickListener {
+            if (!usersMenu.isVisible) {
+                usersMenu.isVisible = true
+                usersMenu.isEnabled = true
+                todosMenu.isVisible = true
+                todosMenu.isEnabled = true
+            } else {
+                usersMenu.isVisible = false
+                usersMenu.isEnabled = false
+                todosMenu.isVisible = false
+                todosMenu.isEnabled = false
+            }
+        }
+
+        usersMenu.setOnClickListener {
+            val intent = Intent(applicationContext, UsersActivity::class.java)
+            startActivity(intent)
         }
     }
 }
