@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/postStatusBarBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/postStatusBarBackground"
     tools:context=".UsersActivity">
 
     <FrameLayout
@@ -43,6 +43,50 @@
                 android:id="@+id/postList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
         </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/floating_todos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="140dp"
+            android:gravity="center"
+            android:text="Todos"
+            android:textSize="16dp"
+            android:fontFamily="casual"
+            android:textStyle="bold"
+            app:backgroundTint="@color/white"
+            app:srcCompat="@android:drawable/ic_input_add"
+            tools:ignore="RtlHardcoded" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/floating_user_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="80dp"
+            android:gravity="center"
+            android:text="User List"
+            android:fontFamily="casual"
+            android:textStyle="bold"
+            android:textSize="16dp"
+            app:backgroundTint="@color/white"
+            app:srcCompat="@android:drawable/ic_input_add"
+            tools:ignore="RtlHardcoded" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floating_action_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            app:srcCompat="@android:drawable/ic_input_add"
+            app:backgroundTint="@color/white"
+            tools:ignore="RtlHardcoded" />
     </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,17 +1,18 @@
 package com.example.lab5
 
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab5.message.postMessage
 import com.example.lab5.message.postMessageAdapter
-import com.example.lab5.message.userMessage
-import com.example.lab5.message.userMessageAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class PostsActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
