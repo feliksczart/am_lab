@@ -64,7 +64,8 @@ class LoaderActivity : AppCompatActivity() {
 //        myDBwritable!!.execSQL("create table comments(id number primary key, postId number, name text, mail text, body text, foreign key(postId) references posts(id));")
 
         val apiHelper = APIHelper()
-        val allThreadsDone = 0
+        var allThreadsDone = 0
+        val mydb = DBHelper(this)
         Thread {
             run {
 //                val timeInMillis = measureTimeMillis {
@@ -72,27 +73,45 @@ class LoaderActivity : AppCompatActivity() {
 //                Thread.sleep(3000 - timeInMillis)
 
                 val users = apiHelper.getUsers("http://jsonplaceholder.typicode.com/users")
-                val mydb = DBHelper(this)
                 for (user in users) {
                     if (mydb.checkUser(user[0])) {
                         mydb.insertUser(user)
                     }
                 }
+            }
+            runOnUiThread {
+                allThreadsDone += 1
+            }
+        }.start()
 
+        Thread {
+            run {
                 val todos = apiHelper.getTodos("http://jsonplaceholder.typicode.com/todos")
                 for (todo in todos) {
                     if (mydb.checkTodo(todo[0])) {
                         mydb.insertTodo(todo)
                     }
                 }
-
+            }
+            runOnUiThread {
+                allThreadsDone += 1
+            }
+        }.start()
+        Thread {
+            run {
                 val posts = apiHelper.getPosts("http://jsonplaceholder.typicode.com/posts")
                 for (post in posts) {
                     if (mydb.checkPost(post[0])) {
                         mydb.insertPost(post)
                     }
                 }
-
+            }
+            runOnUiThread {
+                allThreadsDone += 1
+            }
+        }.start()
+        Thread {
+            run {
                 val comms = apiHelper.getComms("http://jsonplaceholder.typicode.com/comments")
                 for (comm in comms) {
                     if (mydb.checkComment(comm[0])) {
@@ -101,12 +120,21 @@ class LoaderActivity : AppCompatActivity() {
                 }
             }
             runOnUiThread {
-                myDB.close()
-                loadingCircle?.visibility = View.GONE
-                val intent = Intent(this, UsersActivity::class.java)
-                startActivity(intent)
-                Thread.sleep(100)
-                finish()
+                allThreadsDone += 1
+            }
+        }.start()
+        Thread {
+            run {
+                while (true){
+                    if (allThreadsDone == 4){
+                        myDB.close()
+                        loadingCircle?.visibility = View.GONE
+                        val intent = Intent(this, UsersActivity::class.java)
+                        startActivity(intent)
+                        Thread.sleep(100)
+                        finish()
+                    }
+                }
             }
         }.start()
 
