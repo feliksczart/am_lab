@@ -2,17 +2,18 @@ package com.example.lab5
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lab5.message.postMessage
 import com.example.lab5.message.userMessage
 import com.example.lab5.message.userMessageAdapter
+
 
 class UsersActivity : AppCompatActivity() {
 
@@ -32,8 +33,8 @@ class UsersActivity : AppCompatActivity() {
         val mydb = DBHelper(this)
         val allUsers = mydb.getUsers()
 
-        if (allUsers != null) {
-            while (allUsers.moveToNext()) {
+        try {
+            while (allUsers?.moveToNext()!!) {
                 val name = allUsers.getString(allUsers.getColumnIndex("name"))
                 val mail = allUsers.getString(allUsers.getColumnIndex("mail"))
                 val splName = name.split(" ")
@@ -45,6 +46,11 @@ class UsersActivity : AppCompatActivity() {
                 val new = userMessage(initial, name, mail, "Todos: $todoCount", "Posts: $postCount")
                 messageAdapter.addMessage(new)
             }
+        } finally {
+            if (allUsers != null && !allUsers.isClosed) {
+                allUsers.close()
+                mydb.close()
+            }
         }
 
         messageList.addOnItemTouchListener(
@@ -55,7 +61,7 @@ class UsersActivity : AppCompatActivity() {
 
                     override fun onItemClick(view: View, position: Int) {
                         val intent = Intent(applicationContext, PostsActivity::class.java)
-                        intent.putExtra("userId", (position+1).toString())
+                        intent.putExtra("userId", (position + 1).toString())
                         startActivity(intent)
                     }
                 })

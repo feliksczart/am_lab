@@ -60,21 +60,21 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val myDB = this.writableDatabase
         val cursor = myDB.rawQuery("select * from users where id = ?", arrayOf(id))
 
-        return cursor.count == 0
+        return cursor.count == 0.also { cursor.close() }
     }
 
     fun checkTodo(id: String): Boolean {
         val myDB = this.writableDatabase
         val cursor = myDB.rawQuery("select * from todos where id = ?", arrayOf(id))
 
-        return cursor.count == 0
+        return cursor.count == 0.also { cursor.close() }
     }
 
     fun checkPost(id: String): Boolean {
         val myDB = this.writableDatabase
         val cursor = myDB.rawQuery("select * from posts where id = ?", arrayOf(id))
 
-        return cursor.count == 0
+        return cursor.count == 0.also { cursor.close() }
     }
 
     fun getUsers(): Cursor? {
@@ -105,7 +105,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             arrayOf(userId.toString())
         )
 
-        return cursor.count
+        return cursor.count.also { cursor.close() }
     }
 
     fun getPostCount(userId: Number): Int {
@@ -113,13 +113,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val cursor =
             myDB.rawQuery("select * from posts where userId = ?", arrayOf(userId.toString()))
 
-        return cursor.count
+        return cursor.count.also { cursor.close() }
     }
 
     fun getUserName(userId: String): String? {
         val myDB = this.writableDatabase
         val cursor = myDB.rawQuery("select name from users where id = ?", arrayOf(userId))
         cursor.moveToFirst()
-        return cursor.getString(cursor.getColumnIndex("name"))
+        return cursor.getString(cursor.getColumnIndex("name")).also { cursor.close() }
     }
 }

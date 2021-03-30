@@ -20,7 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_top_border"
+                android:background="@drawable/custom_bot_border"
                 android:orientation="horizontal">
 <!--                android:background="#212D3B"-->
 

@@ -3,6 +3,7 @@ package com.example.lab5
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -10,6 +11,8 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -40,10 +43,12 @@ class LoaderActivity : AppCompatActivity() {
     private val hideRunnable = Runnable { hide() }
 
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     @ExperimentalStdlibApi
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.mylightdark)
         supportActionBar?.hide()
 
         val loadingCircle = findViewById<ProgressBar>(R.id.loading)
@@ -86,6 +91,7 @@ class LoaderActivity : AppCompatActivity() {
                 }
             }
             runOnUiThread {
+                myDB.close()
                 loadingCircle?.visibility = View.GONE
                 val intent = Intent(this, UsersActivity::class.java)
                 startActivity(intent)

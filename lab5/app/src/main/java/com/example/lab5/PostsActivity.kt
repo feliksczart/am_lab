@@ -38,13 +38,18 @@ class PostsActivity : AppCompatActivity() {
 
         postsOwner.text = userId?.let { mydb.getUserName(it) }
 
-        if (userPosts != null) {
-            while (userPosts.moveToNext()) {
+        try {
+            while (userPosts?.moveToNext()!!) {
                 val title = userPosts.getString(userPosts.getColumnIndex("title"))
                 val body = userPosts.getString(userPosts.getColumnIndex("body"))
 
                 val new = postMessage(title, body)
                 messageAdapter.addMessage(new)
+            }
+        } finally {
+            if (userPosts != null && !userPosts.isClosed) {
+                userPosts.close()
+                mydb.close()
             }
         }
 
