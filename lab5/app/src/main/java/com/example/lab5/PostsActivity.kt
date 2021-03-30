@@ -80,5 +80,11 @@ class PostsActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, UsersActivity::class.java)
             startActivity(intent)
         }
+
+        todosMenu.setOnClickListener {
+            val intent = Intent(applicationContext, TodosActivity::class.java)
+            intent.putExtra("userId", userId)
+            startActivity(intent)
+        }
     }
 }

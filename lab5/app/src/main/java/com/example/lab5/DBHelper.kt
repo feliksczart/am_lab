@@ -98,6 +98,13 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return cursor
     }
 
+    fun getUserTodos(userId: String): Cursor? {
+        val myDB = this.writableDatabase
+        val cursor = myDB.rawQuery("select * from todos where userId = ?", arrayOf(userId))
+
+        return cursor
+    }
+
     fun getTodoCount(userId: Number): Int {
         val myDB = this.readableDatabase
         val cursor = myDB.rawQuery(

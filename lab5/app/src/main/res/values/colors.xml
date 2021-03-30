@@ -10,4 +10,6 @@
     <color name="mydark">#1a242e</color>
     <color name="mylightdark">#212d3b</color>
     <color name="myblue">#559cde</color>
+    <color name="myred">#b90e0a</color>
+    <color name="mygreen">#149414</color>
 </resources>
