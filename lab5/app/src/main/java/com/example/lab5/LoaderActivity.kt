@@ -58,13 +58,12 @@ class LoaderActivity : AppCompatActivity() {
 //        myDBwritable.execSQL("drop table if exists todos")
 //        myDBwritable.execSQL("drop table if exists posts")
 //        myDBwritable.execSQL("drop table if exists comments")
-//        myDBwritable!!.execSQL("create table users(id number primary key, name text, mail text);")
-//        myDBwritable!!.execSQL("create table todos(id number primary key, userId number, title text, completed text, foreign key(userId) references users(id));")
-//        myDBwritable!!.execSQL("create table posts(id number primary key, userId number, title text, body text, foreign key(userId) references users(id));")
-//        myDBwritable!!.execSQL("create table comments(id number primary key, postId number, name text, mail text, body text, foreign key(postId) references posts(id));")
+        myDBwritable!!.execSQL("create table users(id number primary key, name text, mail text);")
+        myDBwritable.execSQL("create table todos(id number primary key, userId number, title text, completed text, foreign key(userId) references users(id));")
+        myDBwritable.execSQL("create table posts(id number primary key, userId number, title text, body text, foreign key(userId) references users(id));")
+        myDBwritable.execSQL("create table comments(id number primary key, postId number, name text, mail text, body text, foreign key(postId) references posts(id));")
 
         val apiHelper = APIHelper()
-        var allThreadsDone = 0
         val mydb = DBHelper(this)
         Thread {
             run {
@@ -79,9 +78,6 @@ class LoaderActivity : AppCompatActivity() {
                     }
                 }
             }
-            runOnUiThread {
-                allThreadsDone += 1
-            }
         }.start()
 
         Thread {
@@ -93,9 +89,6 @@ class LoaderActivity : AppCompatActivity() {
                     }
                 }
             }
-            runOnUiThread {
-                allThreadsDone += 1
-            }
         }.start()
         Thread {
             run {
@@ -105,9 +98,6 @@ class LoaderActivity : AppCompatActivity() {
                         mydb.insertPost(post)
                     }
                 }
-            }
-            runOnUiThread {
-                allThreadsDone += 1
             }
         }.start()
         Thread {
@@ -120,24 +110,14 @@ class LoaderActivity : AppCompatActivity() {
                 }
             }
             runOnUiThread {
-                allThreadsDone += 1
+                myDB.close()
+                loadingCircle?.visibility = View.GONE
+                val intent = Intent(this, UsersActivity::class.java)
+                startActivity(intent)
+                Thread.sleep(100)
+                finish()
             }
         }.start()
-        Thread {
-            run {
-                while (true){
-                    if (allThreadsDone == 4){
-                        myDB.close()
-                        loadingCircle?.visibility = View.GONE
-                        val intent = Intent(this, UsersActivity::class.java)
-                        startActivity(intent)
-                        Thread.sleep(100)
-                        finish()
-                    }
-                }
-            }
-        }.start()
-
 
         setContentView(R.layout.activity_loader)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
