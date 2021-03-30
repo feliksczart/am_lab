@@ -57,11 +57,14 @@ class LoaderActivity : AppCompatActivity() {
 //        myDBwritable.execSQL("drop table if exists users")
 //        myDBwritable.execSQL("drop table if exists todos")
 //        myDBwritable.execSQL("drop table if exists posts")
+//        myDBwritable.execSQL("drop table if exists comments")
 //        myDBwritable!!.execSQL("create table users(id number primary key, name text, mail text);")
 //        myDBwritable!!.execSQL("create table todos(id number primary key, userId number, title text, completed text, foreign key(userId) references users(id));")
 //        myDBwritable!!.execSQL("create table posts(id number primary key, userId number, title text, body text, foreign key(userId) references users(id));")
+//        myDBwritable!!.execSQL("create table comments(id number primary key, postId number, name text, mail text, body text, foreign key(postId) references posts(id));")
 
         val apiHelper = APIHelper()
+        val allThreadsDone = 0
         Thread {
             run {
 //                val timeInMillis = measureTimeMillis {
@@ -70,23 +73,30 @@ class LoaderActivity : AppCompatActivity() {
 
                 val users = apiHelper.getUsers("http://jsonplaceholder.typicode.com/users")
                 val mydb = DBHelper(this)
-                for (user in users){
-                    if(mydb.checkUser(user[0])){
+                for (user in users) {
+                    if (mydb.checkUser(user[0])) {
                         mydb.insertUser(user)
                     }
                 }
 
                 val todos = apiHelper.getTodos("http://jsonplaceholder.typicode.com/todos")
-                for (todo in todos){
-                    if(mydb.checkTodo(todo[0])){
+                for (todo in todos) {
+                    if (mydb.checkTodo(todo[0])) {
                         mydb.insertTodo(todo)
                     }
                 }
 
                 val posts = apiHelper.getPosts("http://jsonplaceholder.typicode.com/posts")
-                for (post in posts){
-                    if(mydb.checkPost(post[0])){
+                for (post in posts) {
+                    if (mydb.checkPost(post[0])) {
                         mydb.insertPost(post)
+                    }
+                }
+
+                val comms = apiHelper.getComms("http://jsonplaceholder.typicode.com/comments")
+                for (comm in comms) {
+                    if (mydb.checkComment(comm[0])) {
+                        mydb.insertComment(comm)
                     }
                 }
             }

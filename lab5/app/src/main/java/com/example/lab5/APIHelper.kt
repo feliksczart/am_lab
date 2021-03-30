@@ -91,4 +91,36 @@ class APIHelper {
         }
         return posts
     }
+
+    fun getComms(url: String): ArrayList<ArrayList<String>> {
+        val comms = ArrayList<ArrayList<String>>()
+        var iter = 1
+        while (true) {
+            try {
+                val comm = ArrayList<String>()
+                val jsonString = URL("$url/$iter").readText()
+
+                if (jsonString != "") {
+                    val json = JSONObject(jsonString)
+
+                    val id = json.getInt("id")
+                    val postID = json.getInt("postId")
+                    val name = json.getString("name")
+                    val mail = json.getString("email")
+                    val body = json.getString("body")
+
+                    comm.add(id.toString())
+                    comm.add(postID.toString())
+                    comm.add(name)
+                    comm.add(mail)
+                    comm.add(body)
+                }
+                iter++
+                comms.add(comm)
+            } catch (e: FileNotFoundException) {
+                break
+            }
+        }
+        return comms
+    }
 }

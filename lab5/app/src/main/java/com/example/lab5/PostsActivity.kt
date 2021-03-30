@@ -3,6 +3,7 @@ package com.example.lab5
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -86,5 +87,22 @@ class PostsActivity : AppCompatActivity() {
             intent.putExtra("userId", userId)
             startActivity(intent)
         }
+
+        messageList.addOnItemTouchListener(
+            RecyclerItemClickListenr(
+                this,
+                messageList,
+                object : RecyclerItemClickListenr.OnItemClickListener {
+
+                    override fun onItemClick(view: View, position: Int) {
+                        val intent = Intent(applicationContext, CommentsActivity::class.java)
+                        val postId = ((userId!!.toInt()-1)*10)+(position + 1)
+                        //Log.i("POS",postId.toString())
+                        intent.putExtra("postId", postId.toString())
+                        intent.putExtra("userId", userId)
+                        startActivity(intent)
+                    }
+                })
+        )
     }
 }

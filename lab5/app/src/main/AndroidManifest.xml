@@ -14,7 +14,8 @@
         android:theme="@style/Theme.Lab5"
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
-        <activity android:name=".TodosActivity"></activity>
+        <activity android:name=".CommentsActivity" />
+        <activity android:name=".TodosActivity" />
         <activity android:name=".PostsActivity" /> <!-- usesCleartextTraffic: internet issue -->
         <activity
             android:name=".LoaderActivity"
