@@ -1,4 +1,4 @@
-#ApiApp
+# ApiApp
 
 Aplikacja mobilna pobierająca dane z api jsonplaceholder, które są umieszczane w bazie danych sqlite, a następnie odpowiednio wyświetlane w konkretnych aktywnościach. 
 Osoba korzystająca z aplikacji jako pierwszą widzi interaktywną listę użytkowników zawierającą podstawowe dane. Po wybraniu danego użytkownika pojawiają się zamieszczone 
