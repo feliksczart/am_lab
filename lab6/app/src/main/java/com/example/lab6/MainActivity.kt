@@ -4,49 +4,75 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Geocoder
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.location.Location
 import android.location.LocationManager
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
-import android.os.Looper
+import android.os.Looper.myLooper
 import android.util.Log
-import android.widget.Button
+import android.view.animation.Animation
+import android.view.animation.RotateAnimation
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
-import java.util.*
 
-class MainActivity : AppCompatActivity() {
 
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    lateinit var locationRequest: LocationRequest
-    val PERMISSION_ID = 1010
-    lateinit var location: TextView
-    lateinit var getpos: Button
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATION")
+class MainActivity : AppCompatActivity(), SensorEventListener {
 
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private val PERMISSION_ID = 1000
+    lateinit var latitude: TextView
+    lateinit var longitude: TextView
+
+    private lateinit var compass_black: ImageView
+    private var azimuth = 0f
+    private var currAzimuth = 0f
+    private lateinit var sensorManager: SensorManager
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
+        supportActionBar?.hide()
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        location = findViewById(R.id.location)
-        getpos = findViewById(R.id.getPos)
+        latitude = findViewById(R.id.latitude)
+        longitude = findViewById(R.id.longitude)
 
-        getpos.setOnClickListener {
-            Log.d("Debug:", CheckPermission().toString())
-            Log.d("Debug:", isLocationEnabled().toString())
-            RequestPermission()
-            getLastLocation(location)
-        }
+        compass_black = findViewById(R.id.compass_black)
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
+        var thinner = 1
+
+        requestPermission()
+        Thread {
+            while (true) {
+                if (thinner == 1) {
+                    getLastLocation(latitude, longitude)
+                    thinner = -1
+                } else {
+                    Thread.sleep(1000)
+                    thinner += 1
+                }
+            }
+        }.start()
     }
 
 
-    @SuppressLint("SetTextI18n")
-    fun getLastLocation(loca: TextView) {
-        if (CheckPermission()) {
+    @SuppressLint("SetTextI18n", "MissingPermission")
+    fun getLastLocation(latitude: TextView, longitude: TextView) {
+        if (checkPermission()) {
             if (isLocationEnabled()) {
                 if (ActivityCompat.checkSelfPermission(
                         this,
@@ -59,30 +85,26 @@ class MainActivity : AppCompatActivity() {
                     return
                 }
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
-                    var location: Location? = task.result
-                    if (location == null) {
-                        NewLocationData()
-                    } else {
-                        Log.d("Debug:", "Your Location:" + location.longitude)
-                        loca.text =
-                            "You Current Location is : Long: " + location.longitude + " , Lat: " + location.latitude + "\n" + getCityName(
-                                location.latitude,
-                                location.longitude
-                            )
-                    }
+                    val location: Location? = task.result
+                    newLocationData()
+                    Log.d("Debug:", "Your Location:" + location!!.longitude)
+                    latitude.text = location.latitude.toString()
+                    longitude.text = location.longitude.toString()
+
                 }
             } else {
                 Toast.makeText(this, "Please Turn on Your device Location", Toast.LENGTH_SHORT)
                     .show()
             }
         } else {
-            RequestPermission()
+            requestPermission()
         }
     }
 
 
-    fun NewLocationData() {
-        var locationRequest = LocationRequest()
+    @SuppressLint("MissingPermission")
+    private fun newLocationData() {
+        val locationRequest = LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 0
         locationRequest.fastestInterval = 0
@@ -96,17 +118,10 @@ class MainActivity : AppCompatActivity() {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
-        fusedLocationProviderClient!!.requestLocationUpdates(
-            locationRequest, locationCallback, Looper.myLooper()
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest, locationCallback, myLooper()
         )
     }
 
@@ -114,28 +129,22 @@ class MainActivity : AppCompatActivity() {
     private val locationCallback = object : LocationCallback() {
         @SuppressLint("SetTextI18n")
         override fun onLocationResult(locationResult: LocationResult) {
-            var lastLocation: Location = locationResult.lastLocation
+            val lastLocation: Location = locationResult.lastLocation
             Log.d("Debug:", "your last last location: " + lastLocation.longitude.toString())
-            location.text =
-                "You Last Location is : Long: " + lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n" + getCityName(
-                    lastLocation.latitude,
-                    lastLocation.longitude
-                )
+            latitude.text = lastLocation.latitude.toString()
+            longitude.text = lastLocation.longitude.toString()
         }
     }
 
-    private fun CheckPermission(): Boolean {
-        //this function will return a boolean
-        //true: if we have permission
-        //false if not
+    private fun checkPermission(): Boolean {
         if (
             ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED ||
             ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             return true
@@ -145,22 +154,19 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun RequestPermission() {
-        //this function will allows us to tell the user to requesut the necessary permsiion if they are not garented
+    private fun requestPermission() {
         ActivityCompat.requestPermissions(
             this,
             arrayOf(
-                android.Manifest.permission.ACCESS_COARSE_LOCATION,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
             ),
             PERMISSION_ID
         )
     }
 
-    fun isLocationEnabled(): Boolean {
-        //this function will return to us the state of the location service
-        //if the gps or the network provider is enabled then it will return true otherwise it will return false
-        var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private fun isLocationEnabled(): Boolean {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
@@ -179,15 +185,78 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getCityName(lat: Double,long: Double):String{
-        var cityName:String = ""
-        var countryName = ""
-        var geoCoder = Geocoder(this, Locale.getDefault())
-        var Adress = geoCoder.getFromLocation(lat,long,3)
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onResume() {
+        super.onResume()
+        sensorManager.registerListener(
+            this,
+            sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+            SensorManager.SENSOR_DELAY_GAME
+        )
+        sensorManager.registerListener(
+            this,
+            sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+            SensorManager.SENSOR_DELAY_GAME
+        )
+    }
 
-        cityName = Adress.get(0).locality
-        countryName = Adress.get(0).countryName
-        Log.d("Debug:","Your City: " + cityName + " ; your Country " + countryName)
-        return cityName
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        val alpha = 0.97f
+        val gravity = FloatArray(3)
+        val geomagnetic = FloatArray(3)
+        val r = FloatArray(9)
+        val i = FloatArray(9)
+        synchronized(this) {
+            if (event!!.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+                gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0]
+                gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1]
+                gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2]
+            } else if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
+                geomagnetic[0] = alpha * geomagnetic[0] + (1 - alpha) * event.values[0]
+                geomagnetic[1] = alpha * geomagnetic[1] + (1 - alpha) * event.values[1]
+                geomagnetic[2] = alpha * geomagnetic[2] + (1 - alpha) * event.values[2]
+            }
+            var success = SensorManager.getRotationMatrix(r, i, gravity, geomagnetic)
+
+            if (success) {
+                lateinit var orientation: FloatArray
+                SensorManager.getOrientation(r, orientation)
+                azimuth = Math.toDegrees(orientation[0].toDouble()).toFloat()
+                azimuth = (azimuth + 360) % 360
+
+                val animation = RotateAnimation(
+                    -currAzimuth,
+                    -azimuth,
+                    Animation.RELATIVE_TO_SELF,
+                    0.5f,
+                    Animation.RELATIVE_TO_SELF,
+                    0.5f
+                )
+                currAzimuth = azimuth
+                animation.duration = 500
+                animation.repeatCount = 0
+                animation.fillAfter = true
+
+                compass_black.startAnimation(animation)
+            }
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        when (accuracy) {
+            SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
+            }
+            SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
+            }
+            SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
+            }
+            SensorManager.SENSOR_STATUS_UNRELIABLE -> {
+            }
+        }
     }
 }
