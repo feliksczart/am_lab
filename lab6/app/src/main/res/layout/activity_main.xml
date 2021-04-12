@@ -17,10 +17,10 @@
             android:orientation="vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/compass_black"
+                android:id="@+id/compass"
                 android:layout_width="350dp"
                 android:layout_height="350dp"
-                android:src="@drawable/compass_black"
+                android:src="@drawable/compass"
                 tools:ignore="MissingConstraints" />
 
 

@@ -2,11 +2,12 @@ package com.example.lab6
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -16,6 +17,7 @@ import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper.myLooper
+import android.os.SystemClock
 import android.util.Log
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
@@ -27,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import kotlin.math.roundToInt
 
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATION")
@@ -37,12 +40,13 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     lateinit var latitude: TextView
     lateinit var longitude: TextView
 
-    private lateinit var compass_black: ImageView
+    private lateinit var compass: ImageView
     private var azimuth = 0f
     private lateinit var sensorManager: SensorManager
 
     private var brightness: Sensor? = null
 
+    @SuppressLint("ShortAlarm")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +54,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         supportActionBar?.hide()
 
+        Thread {
+            startService(Intent(applicationContext, MyService::class.java))
+        }.start()
+
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         latitude = findViewById(R.id.latitude)
         longitude = findViewById(R.id.longitude)
 
-        compass_black = findViewById(R.id.compass_black)
+        compass = findViewById(R.id.compass)
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         brightness = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
@@ -92,6 +100,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 }
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     val location: Location? = task.result
+
                     newLocationData()
 
                     latitude.text = formatCoords(location!!.latitude.toString())
@@ -210,7 +219,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     @SuppressLint("ResourceType")
     override fun onSensorChanged(event: SensorEvent?) {
-        val degree = Math.round(event!!.values[0]).toFloat()
+        val degree = event!!.values[0].roundToInt().toFloat()
 
         val ra = RotateAnimation(
             azimuth,
@@ -223,7 +232,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         ra.duration = 210
         ra.fillAfter = true
 
-        compass_black.startAnimation(ra)
+        compass.startAnimation(ra)
 
         azimuth = -degree
 
@@ -232,10 +241,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
             if (isDark(light)) {
                 window.decorView.setBackgroundColor(Color.BLACK)
-                compass_black.setColorFilter(Color.argb(255, 255, 255, 255))
+                compass.setColorFilter(Color.argb(255, 255, 255, 255))
             } else {
                 window.decorView.setBackgroundColor(Color.WHITE)
-                compass_black.setColorFilter(Color.argb(255, 0, 0, 0))
+                compass.setColorFilter(Color.argb(255, 0, 0, 0))
             }
 
         }
@@ -257,10 +266,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         return "$latDegree°$latMin'$latSec''"
     }
 
-    fun isDark(brigh: Float): Boolean {
+    private fun isDark(brigh: Float): Boolean {
         return when (brigh.toInt()) {
             in 0..50 -> true
             else -> false
         }
     }
+
 }
