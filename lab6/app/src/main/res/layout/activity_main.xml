@@ -23,6 +23,7 @@
                 android:src="@drawable/compass_black"
                 tools:ignore="MissingConstraints" />
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

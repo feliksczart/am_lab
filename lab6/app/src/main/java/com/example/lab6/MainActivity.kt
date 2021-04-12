@@ -4,6 +4,9 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -38,6 +41,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var azimuth = 0f
     private lateinit var sensorManager: SensorManager
 
+    private var brightness: Sensor? = null
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +56,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         compass_black = findViewById(R.id.compass_black)
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+
+        brightness = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
 
         var thinner = 1
 
@@ -129,7 +136,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         @SuppressLint("SetTextI18n")
         override fun onLocationResult(locationResult: LocationResult) {
             val lastLocation: Location = locationResult.lastLocation
-            Log.d("Debug:", "your last last location: " + lastLocation.longitude.toString())
             latitude.text = formatCoords(lastLocation.latitude.toString())
             longitude.text = formatCoords(lastLocation.longitude.toString())
         }
@@ -190,7 +196,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         sensorManager.registerListener(
             this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
             SensorManager.SENSOR_DELAY_GAME
-        );
+        )
+        sensorManager.registerListener(
+            this, brightness,
+            SensorManager.SENSOR_DELAY_NORMAL
+        )
     }
 
     override fun onPause() {
@@ -198,6 +208,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         sensorManager.unregisterListener(this)
     }
 
+    @SuppressLint("ResourceType")
     override fun onSensorChanged(event: SensorEvent?) {
         val degree = Math.round(event!!.values[0]).toFloat()
 
@@ -213,19 +224,43 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         ra.fillAfter = true
 
         compass_black.startAnimation(ra)
+
+        azimuth = -degree
+
+        if (event.sensor?.type == Sensor.TYPE_LIGHT) {
+            val light = event.values[0]
+
+            if (isDark(light)) {
+                window.decorView.setBackgroundColor(Color.BLACK)
+                compass_black.setColorFilter(Color.argb(255, 255, 255, 255))
+            } else {
+                window.decorView.setBackgroundColor(Color.WHITE)
+                compass_black.setColorFilter(Color.argb(255, 0, 0, 0))
+            }
+
+        }
         azimuth = -degree
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        return
     }
 
     fun formatCoords(str: String): String {
         val spLatitude = str.split(".")
         val latDegree = spLatitude[0]
-        val min = ("0."+spLatitude[1]).toFloat()*60.0f
+        val min = ("0." + spLatitude[1]).toFloat() * 60.0f
         val latMin = min.toString().split(".")[0]
-        val latSec = (("0."+min.toString().split(".")[1]).toFloat()*60.0f).toString().split(".")[0]
+        val latSec =
+            (("0." + min.toString().split(".")[1]).toFloat() * 60.0f).toString().split(".")[0]
 
         return "$latDegree°$latMin'$latSec''"
+    }
+
+    fun isDark(brigh: Float): Boolean {
+        return when (brigh.toInt()) {
+            in 0..50 -> true
+            else -> false
+        }
     }
 }
