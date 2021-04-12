@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var compass_black: ImageView
     private var azimuth = 0f
-    private var currAzimuth = 0f
     private lateinit var sensorManager: SensorManager
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -87,9 +86,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     val location: Location? = task.result
                     newLocationData()
-                    Log.d("Debug:", "Your Location:" + location!!.longitude)
-                    latitude.text = location.latitude.toString()
-                    longitude.text = location.longitude.toString()
+
+                    latitude.text = formatCoords(location!!.latitude.toString())
+                    longitude.text = formatCoords(location.longitude.toString())
 
                 }
             } else {
@@ -131,8 +130,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         override fun onLocationResult(locationResult: LocationResult) {
             val lastLocation: Location = locationResult.lastLocation
             Log.d("Debug:", "your last last location: " + lastLocation.longitude.toString())
-            latitude.text = lastLocation.latitude.toString()
-            longitude.text = lastLocation.longitude.toString()
+            latitude.text = formatCoords(lastLocation.latitude.toString())
+            longitude.text = formatCoords(lastLocation.longitude.toString())
         }
     }
 
@@ -189,15 +188,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     override fun onResume() {
         super.onResume()
         sensorManager.registerListener(
-            this,
-            sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
+            this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
             SensorManager.SENSOR_DELAY_GAME
-        )
-        sensorManager.registerListener(
-            this,
-            sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-            SensorManager.SENSOR_DELAY_GAME
-        )
+        );
     }
 
     override fun onPause() {
@@ -206,57 +199,33 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent?) {
-        val alpha = 0.97f
-        val gravity = FloatArray(3)
-        val geomagnetic = FloatArray(3)
-        val r = FloatArray(9)
-        val i = FloatArray(9)
-        synchronized(this) {
-            if (event!!.sensor.type == Sensor.TYPE_ACCELEROMETER) {
-                gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0]
-                gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1]
-                gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2]
-            } else if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
-                geomagnetic[0] = alpha * geomagnetic[0] + (1 - alpha) * event.values[0]
-                geomagnetic[1] = alpha * geomagnetic[1] + (1 - alpha) * event.values[1]
-                geomagnetic[2] = alpha * geomagnetic[2] + (1 - alpha) * event.values[2]
-            }
-            var success = SensorManager.getRotationMatrix(r, i, gravity, geomagnetic)
+        val degree = Math.round(event!!.values[0]).toFloat()
 
-            if (success) {
-                lateinit var orientation: FloatArray
-                SensorManager.getOrientation(r, orientation)
-                azimuth = Math.toDegrees(orientation[0].toDouble()).toFloat()
-                azimuth = (azimuth + 360) % 360
+        val ra = RotateAnimation(
+            azimuth,
+            -degree,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f
+        )
 
-                val animation = RotateAnimation(
-                    -currAzimuth,
-                    -azimuth,
-                    Animation.RELATIVE_TO_SELF,
-                    0.5f,
-                    Animation.RELATIVE_TO_SELF,
-                    0.5f
-                )
-                currAzimuth = azimuth
-                animation.duration = 500
-                animation.repeatCount = 0
-                animation.fillAfter = true
+        ra.duration = 210
+        ra.fillAfter = true
 
-                compass_black.startAnimation(animation)
-            }
-        }
+        compass_black.startAnimation(ra)
+        azimuth = -degree
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        when (accuracy) {
-            SensorManager.SENSOR_STATUS_ACCURACY_LOW -> {
-            }
-            SensorManager.SENSOR_STATUS_ACCURACY_MEDIUM -> {
-            }
-            SensorManager.SENSOR_STATUS_ACCURACY_HIGH -> {
-            }
-            SensorManager.SENSOR_STATUS_UNRELIABLE -> {
-            }
-        }
+    }
+
+    fun formatCoords(str: String): String {
+        val spLatitude = str.split(".")
+        val latDegree = spLatitude[0]
+        val min = ("0."+spLatitude[1]).toFloat()*60.0f
+        val latMin = min.toString().split(".")[0]
+        val latSec = (("0."+min.toString().split(".")[1]).toFloat()*60.0f).toString().split(".")[0]
+
+        return "$latDegree°$latMin'$latSec''"
     }
 }
