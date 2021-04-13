@@ -2,10 +2,10 @@ package com.example.lab6
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.hardware.Sensor
@@ -14,10 +14,8 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.location.Location
 import android.location.LocationManager
-import android.os.Build
-import android.os.Bundle
+import android.os.*
 import android.os.Looper.myLooper
-import android.os.SystemClock
 import android.util.Log
 import android.view.animation.Animation
 import android.view.animation.RotateAnimation
@@ -29,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import java.util.*
 import kotlin.math.roundToInt
 
 
@@ -47,6 +46,18 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var sensorManager: SensorManager
 
     private var brightness: Sensor? = null
+    private var temperature: String? = null
+
+    private val receiver: BroadcastReceiver = object: BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            intent?.apply {
+                val temp = getIntExtra(
+                    BatteryManager.EXTRA_TEMPERATURE,0
+                )/10F
+                temperature = "Phone Temperature\n$temp${0x00B0.toChar()}C"
+            }
+        }
+    }
 
     @SuppressLint("ShortAlarm")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -56,9 +67,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         supportActionBar?.hide()
 
-        Thread {
-            startService(Intent(applicationContext, MyService::class.java))
-        }.start()
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         latitude = findViewById(R.id.latitude)
@@ -70,6 +78,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
 
         brightness = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+
+        val filter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+        registerReceiver(receiver,filter)
+
+        showTemperature()
 
         var thinner = 1
 
@@ -281,6 +294,27 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             in 0..50 -> true
             else -> false
         }
+    }
+
+    private fun showTemperature() {
+        var count = 100
+
+        val timer = Timer()
+        timer.schedule(object : TimerTask() {
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun run() {
+                runOnUiThread {
+                    count -= 1
+                    val toast: Toast = Toast.makeText(
+                        applicationContext, temperature,
+                        Toast.LENGTH_LONG
+                    )
+                    toast.show()
+                    val handler = Handler()
+                    handler.postDelayed({ toast.cancel() }, 1000)
+                }
+            }
+        }, 0, 60*1000)
     }
 
 }
