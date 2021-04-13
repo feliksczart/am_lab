@@ -314,7 +314,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     handler.postDelayed({ toast.cancel() }, 1000)
                 }
             }
-        }, 0, 5 * 1000)
+        }, 0, 10 * 1000)
     }
 
 }
