@@ -39,6 +39,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private val PERMISSION_ID = 1000
     lateinit var latitude: TextView
     lateinit var longitude: TextView
+    lateinit var latText: TextView
+    lateinit var longText: TextView
 
     private lateinit var compass: ImageView
     private var azimuth = 0f
@@ -61,6 +63,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         latitude = findViewById(R.id.latitude)
         longitude = findViewById(R.id.longitude)
+        latText = findViewById(R.id.latText)
+        longText = findViewById(R.id.longText)
 
         compass = findViewById(R.id.compass)
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
@@ -242,9 +246,15 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             if (isDark(light)) {
                 window.decorView.setBackgroundColor(Color.BLACK)
                 compass.setColorFilter(Color.argb(255, 255, 255, 255))
+                longText.setTextColor(Color.parseColor("#ffffff"))
+                latText.setTextColor(Color.parseColor("#ffffff"))
+                longitude.setTextColor(Color.parseColor("#757575"))
+                latitude.setTextColor(Color.parseColor("#757575"))
             } else {
                 window.decorView.setBackgroundColor(Color.WHITE)
                 compass.setColorFilter(Color.argb(255, 0, 0, 0))
+                longText.setTextColor(Color.parseColor("#000000"))
+                latText.setTextColor(Color.parseColor("#000000"))
             }
 
         }
