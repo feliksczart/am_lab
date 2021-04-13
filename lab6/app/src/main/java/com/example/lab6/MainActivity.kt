@@ -236,22 +236,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     @SuppressLint("ResourceType")
     override fun onSensorChanged(event: SensorEvent?) {
-        val degree = event!!.values[0].roundToInt().toFloat()
-
-        val ra = RotateAnimation(
-            azimuth,
-            -degree,
-            Animation.RELATIVE_TO_SELF, 0.5f,
-            Animation.RELATIVE_TO_SELF,
-            0.5f
-        )
-
-        ra.duration = 210
-        ra.fillAfter = true
-
-        compass.startAnimation(ra)
-
-        azimuth = -degree
 
         if (event.sensor?.type == Sensor.TYPE_LIGHT) {
             val light = event.values[0]
@@ -270,8 +254,24 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                 latText.setTextColor(Color.parseColor("#000000"))
             }
 
+        } else {
+            val degree = event!!.values[0].roundToInt().toFloat()
+
+            val ra = RotateAnimation(
+                azimuth,
+                -degree,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f
+            )
+
+            ra.duration = 210
+            ra.fillAfter = true
+
+            compass.startAnimation(ra)
+
+            azimuth = -degree
         }
-        azimuth = -degree
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
