@@ -48,12 +48,12 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private var brightness: Sensor? = null
     private var temperature: String? = null
 
-    private val receiver: BroadcastReceiver = object: BroadcastReceiver(){
+    private val receiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             intent?.apply {
                 val temp = getIntExtra(
-                    BatteryManager.EXTRA_TEMPERATURE,0
-                )/10F
+                    BatteryManager.EXTRA_TEMPERATURE, 0
+                ) / 10F
                 temperature = "Phone Temperature\n$temp${0x00B0.toChar()}C"
             }
         }
@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         supportActionBar?.hide()
 
-
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         latitude = findViewById(R.id.latitude)
         longitude = findViewById(R.id.longitude)
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         brightness = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
 
         val filter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-        registerReceiver(receiver,filter)
+        registerReceiver(receiver, filter)
 
         showTemperature()
 
@@ -204,6 +203,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -314,7 +314,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     handler.postDelayed({ toast.cancel() }, 1000)
                 }
             }
-        }, 0, 60*1000)
+        }, 0, 5 * 1000)
     }
 
 }
