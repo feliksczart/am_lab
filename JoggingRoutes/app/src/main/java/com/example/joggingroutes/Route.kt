@@ -32,6 +32,4 @@ class Route(val name: String, val route: String) {
     override fun toString(): String {
         return this.name
     }
-
-
 }

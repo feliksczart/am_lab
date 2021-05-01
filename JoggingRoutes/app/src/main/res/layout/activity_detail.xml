@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:name="com.example.joggingroutes.RouteDetailFragment"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/detail_frag"/>
+    tools:context=".DetailActivity">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map_frag"
+        tools:context=".MapActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        tools:ignore="RedundantNamespace" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

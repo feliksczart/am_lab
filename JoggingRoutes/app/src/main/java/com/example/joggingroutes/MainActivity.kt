@@ -1,4 +1,5 @@
 //http://www.runmap.net/en/regional/Poland/Greater+Poland+Voivodeship/Pozna%C5%84/
+//https://www.youtube.com/watch?v=wRDLjUK8nyU
 package com.example.joggingroutes
 
 import android.content.Intent
@@ -14,6 +15,8 @@ class MainActivity : AppCompatActivity(), RouteListFragment.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+//        window.statusBarColor = ContextCompat.getColor(this, R.color.mydark)
+        supportActionBar?.hide()
     }
 
     override fun itemClicked(id: Long) {
