@@ -3,11 +3,11 @@ package com.example.joggingroutes
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.directions.route.*
-import com.directions.route.Route
-import com.google.android.gms.maps.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.Polyline
@@ -17,8 +17,8 @@ import com.google.android.gms.maps.model.PolylineOptions
 //import android.support.v7.app.AppCompatActivity;
 
 
-@Suppress("DEPRECATION")
-class DetailActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener {
+@Suppress("DEPRECATION", "DEPRECATED_IDENTITY_EQUALS")
+class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     companion object {
         val EXTRA_COCKTAIL_ID = "id"
     }
@@ -29,10 +29,13 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener 
     lateinit var place1: MarkerOptions
     lateinit var place2: MarkerOptions
     lateinit var polyLines: ArrayList<Polyline>
+    lateinit var markerPoints: ArrayList<LatLng>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
+        supportActionBar?.hide()
 
 //        button = findViewById(R.id.btnGetDirection)
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map_frag) as? SupportMapFragment
@@ -52,62 +55,10 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback, RoutingListener 
         map = googleMap
 //        map.addMarker(place1)
 //        map.addMarker(place2)
-        FindRoutes(place1.position,place2.position)
-    }
+        val line = PolylineOptions().add(place1.position,place2.position)
+            .width(7f).color(Color.RED)
 
-    fun FindRoutes(start: LatLng, end: LatLng){
-        val routing: Routing = Routing.Builder()
-            .travelMode(AbstractRouting.TravelMode.BIKING)
-            .withListener(this)
-            .alternativeRoutes(false)
-            .waypoints(start,end)
-            .key(R.string.google_maps_key.toString())
-            .build()
-        routing.execute()
-
-    }
-
-    override fun onRoutingFailure(p0: RouteException?) {
-        Toast.makeText(applicationContext,"Routing Failed", Toast.LENGTH_SHORT).show()
-        FindRoutes(place1.position,place2.position)
-    }
-
-    override fun onRoutingStart() {
-        Toast.makeText(this,"Finding Route...",Toast.LENGTH_LONG).show();
-    }
-
-    override fun onRoutingSuccess(route: ArrayList<Route>?, shortestRouteIndex: Int) {
-        val center: CameraUpdate = CameraUpdateFactory.newLatLng(place1.position)
-        val zoom: CameraUpdate = CameraUpdateFactory.zoomTo(16F)
-
-        if (polyLines != null){
-            polyLines.clear()
-        }
-
-        val polyOptions = PolylineOptions()
-        var polyStart: LatLng? = null
-        var polyEnd: LatLng? = null
-
-        polyLines = ArrayList()
-
-        for (i in 0..route!!.size){
-            if (i==shortestRouteIndex){
-                polyOptions.color(Color.BLUE)
-                polyOptions.width(7F)
-                polyOptions.addAll(route[shortestRouteIndex].points)
-                val polyLine: Polyline = map.addPolyline(polyOptions)
-                polyStart = polyLine.points[0]
-                val k = polyLine.points.size
-                polyEnd = polyLine.points[k-1]
-                polyLines.add(polyLine)
-            }
-        }
-        val endMarker = MarkerOptions()
-        endMarker.position(polyEnd)
-        map.addMarker(endMarker)
-    }
-
-    override fun onRoutingCancelled() {
-        FindRoutes(place1.position,place2.position)
+        map.addPolyline(line)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(place1.position, 16f))
     }
 }
