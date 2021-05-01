@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+//import android.support.v4.app.Fragment
 import kotlin.properties.Delegates
 
 
@@ -18,8 +19,8 @@ class RouteDetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_route_detail, container, false)
     }
 
-    fun setRoute(id: Int) {
-        this.routeId = id
+    fun setRoute(id: Long) {
+        this.routeId = id.toInt()
     }
 
     override fun onStart() {

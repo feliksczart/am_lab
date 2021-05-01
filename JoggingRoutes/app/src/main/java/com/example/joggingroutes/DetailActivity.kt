@@ -2,6 +2,7 @@ package com.example.joggingroutes
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+//import android.support.v7.app.AppCompatActivity;
 
 
 class DetailActivity : AppCompatActivity() {
@@ -17,6 +18,6 @@ class DetailActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.detail_frag) as RouteDetailFragment?
 
         val routeId = intent.extras!![EXTRA_COCKTAIL_ID] as Int
-        frag!!.setRoute(routeId)
+        frag!!.setRoute(routeId.toLong())
     }
 }
