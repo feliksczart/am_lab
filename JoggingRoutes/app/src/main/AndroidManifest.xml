@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JoggingRoutes">
         <activity android:name=".DetailActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

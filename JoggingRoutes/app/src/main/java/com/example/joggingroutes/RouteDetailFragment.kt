@@ -12,6 +12,14 @@ import kotlin.properties.Delegates
 
 class RouteDetailFragment : Fragment() {
     private var routeId by Delegates.notNull<Int>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            routeId = savedInstanceState.getLong("routeId").toInt()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,12 +36,15 @@ class RouteDetailFragment : Fragment() {
         val view = view
         if (view != null) {
             val title = view.findViewById<View>(R.id.textTitle) as TextView
-            val route: Route = Route.routes[routeId.toInt()]
+            val route: Route = Route.routes[routeId]
             title.text = route.getName()
             val description = view.findViewById<View>(R.id.textDescription) as TextView
             description.text = route.getRoute()
         }
     }
 
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        savedInstanceState.putLong("routeId", routeId.toLong())
+    }
 
 }
