@@ -1,13 +1,14 @@
 package com.example.joggingroutes
 
 import android.util.Log
+import com.google.android.gms.maps.model.LatLng
 
 
 @Suppress(
     "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "DEPRECATION",
     "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS"
 )
-class Route(val name: String, val length: String, val route: String) {
+class Route(val name: String, val length: String, val route: MutableList<LatLng>) {
 
     companion object {
         val routes = getData() //listOf(
@@ -37,56 +38,67 @@ class Route(val name: String, val length: String, val route: String) {
             val len9 = getRouteLength(rts[8])
             val len10 = getRouteLength(rts[9])
 
+            val coords1 = getRouteCoords(rts[0])
+            val coords2 = getRouteCoords(rts[1])
+            val coords3 = getRouteCoords(rts[2])
+            val coords4 = getRouteCoords(rts[3])
+            val coords5 = getRouteCoords(rts[4])
+            val coords6 = getRouteCoords(rts[5])
+            val coords7 = getRouteCoords(rts[6])
+            val coords8 = getRouteCoords(rts[7])
+            val coords9 = getRouteCoords(rts[8])
+            val coords10 = getRouteCoords(rts[9])
+
             return listOf(
                 Route(
                     name1,
                     len1,
-                    "len"
+                    coords1
                 ),
                 Route(
                     name2,
                     len2,
-                    "len"
+                    coords2
                 ),
                 Route(
                     name3,
                     len3,
-                    "len"
+                    coords3
                 ),
                 Route(
                     name4,
                     len4,
-                    "len"
+                    coords4
                 ),
                 Route(
                     name5,
                     len5,
-                    "len"
+                    coords5
                 ),
                 Route(
                     name6,
                     len6,
-                    "len"
+                    coords6
                 ),
                 Route(
                     name7,
                     len7,
-                    "len"
+                    coords7
                 ),
                 Route(
                     name8,
                     len8,
-                    "len"
+                    coords8
                 ),
                 Route(
                     name9,
                     len9,
-                    "len"
+                    coords9
                 ),
                 Route(
                     name10,
                     len10,
-                    "len"
+                    coords10
                 )
             )
         }
@@ -116,10 +128,24 @@ class Route(val name: String, val length: String, val route: String) {
             }
             return result
         }
+
+        fun getRouteCoords(route: String): MutableList<LatLng> {
+            val list = route.split("\n")
+            val result = mutableListOf<LatLng>()
+            for (i in list){
+                if ("<trkpt" in i){
+                    result.add(LatLng(
+                        i.substringAfter("lat=\"").substringBefore('"').toDouble(),
+                        i.substringAfter("lon=\"").substringBefore('"').toDouble()
+                    ))
+                }
+            }
+            return result
+        }
     }
 
     @JvmName("getRoute1")
-    fun getRoute(): String {
+    fun getRouteCoords(): MutableList<LatLng> {
         return this.route
     }
 

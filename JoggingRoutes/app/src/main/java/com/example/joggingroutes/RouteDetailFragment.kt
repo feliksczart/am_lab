@@ -39,7 +39,7 @@ class RouteDetailFragment : Fragment() {
             val route: Route = Route.routes[routeId]
             title.text = route.getName()
             val description = view.findViewById<View>(R.id.textDescription) as TextView
-            description.text = route.getRoute()
+            description.text = route.getRouteCoords().toString()
         }
     }
 
