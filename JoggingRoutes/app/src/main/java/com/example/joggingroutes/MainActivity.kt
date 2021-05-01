@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+
 //import android.support.v7.app.AppCompatActivity;
 //import android.support.v4.app.FragmentTransaction;
 
 
 class MainActivity : AppCompatActivity(), RouteListFragment.Listener {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

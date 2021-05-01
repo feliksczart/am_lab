@@ -1,0 +1,147 @@
+<route name="5">
+    <name name="Malta i Poznań" />
+    <length len="14km" />
+    <coords>
+        <trkpt lat="52.43195" lon="16.94324">
+            <ele>78</ele>
+        </trkpt>
+        <trkpt lat="52.43196" lon="16.9432">
+            <ele>78</ele>
+        </trkpt>
+        <trkpt lat="52.43196" lon="16.9432">
+            <ele>78</ele>
+        </trkpt>
+        <trkpt lat="52.43152" lon="16.94485">
+            <ele>78</ele>
+        </trkpt>
+        <trkpt lat="52.43148" lon="16.94547">
+            <ele>78</ele>
+        </trkpt>
+        <trkpt lat="52.43141" lon="16.94556">
+            <ele>78</ele>
+        </trkpt>
+        <trkpt lat="52.43141" lon="16.94556">
+            <ele>78</ele>
+        </trkpt>
+        <trkpt lat="52.43108" lon="16.94572">
+            <ele>79</ele>
+        </trkpt>
+        <trkpt lat="52.43102" lon="16.94602">
+            <ele>80</ele>
+        </trkpt>
+        <trkpt lat="52.43077" lon="16.94608">
+            <ele>81</ele>
+        </trkpt>
+        <trkpt lat="52.42914" lon="16.94682">
+            <ele>78</ele>
+        </trkpt>
+        <trkpt lat="52.42914" lon="16.94682">
+            <ele>78</ele>
+        </trkpt>
+        <trkpt lat="52.42805" lon="16.94732">
+            <ele>77</ele>
+        </trkpt>
+        <trkpt lat="52.42805" lon="16.94732">
+            <ele>77</ele>
+        </trkpt>
+        <trkpt lat="52.42714" lon="16.94777">
+            <ele>77</ele>
+        </trkpt>
+        <trkpt lat="52.42383" lon="16.94894">
+            <ele>71</ele>
+        </trkpt>
+        <trkpt lat="52.42297" lon="16.94826">
+            <ele>69</ele>
+        </trkpt>
+        <trkpt lat="52.41731" lon="16.93993">
+            <ele>60</ele>
+        </trkpt>
+        <trkpt lat="52.41731" lon="16.93993">
+            <ele>60</ele>
+        </trkpt>
+        <trkpt lat="52.41114" lon="16.93826">
+            <ele>58</ele>
+        </trkpt>
+        <trkpt lat="52.40996" lon="16.94341">
+            <ele>55</ele>
+        </trkpt>
+        <trkpt lat="52.41061" lon="16.95289">
+            <ele>56</ele>
+        </trkpt>
+        <trkpt lat="52.40972" lon="16.95791">
+            <ele>60</ele>
+        </trkpt>
+        <trkpt lat="52.4075" lon="16.9598">
+            <ele>63</ele>
+        </trkpt>
+        <trkpt lat="52.40533" lon="16.96272">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.40394" lon="16.97104">
+            <ele>63</ele>
+        </trkpt>
+        <trkpt lat="52.40378" lon="16.97735">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.40297" lon="16.97941">
+            <ele>62</ele>
+        </trkpt>
+        <trkpt lat="52.4021" lon="16.98491">
+            <ele>58</ele>
+        </trkpt>
+        <trkpt lat="52.40231" lon="16.98765">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39998" lon="16.98791">
+            <ele>65</ele>
+        </trkpt>
+        <trkpt lat="52.39949" lon="16.98692">
+            <ele>78</ele>
+        </trkpt>
+        <trkpt lat="52.39964" lon="16.97632">
+            <ele>56</ele>
+        </trkpt>
+        <trkpt lat="52.40271" lon="16.96341">
+            <ele>58</ele>
+        </trkpt>
+        <trkpt lat="52.40407" lon="16.95478">
+            <ele>59</ele>
+        </trkpt>
+        <trkpt lat="52.40729" lon="16.95568">
+            <ele>59</ele>
+        </trkpt>
+        <trkpt lat="52.41038" lon="16.95705">
+            <ele>58</ele>
+        </trkpt>
+        <trkpt lat="52.41059" lon="16.94911">
+            <ele>58</ele>
+        </trkpt>
+        <trkpt lat="52.41088" lon="16.95173">
+            <ele>54</ele>
+        </trkpt>
+        <trkpt lat="52.41035" lon="16.94508">
+            <ele>55</ele>
+        </trkpt>
+        <trkpt lat="52.41056" lon="16.94186">
+            <ele>55</ele>
+        </trkpt>
+        <trkpt lat="52.41161" lon="16.93791">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.41899" lon="16.94092">
+            <ele>77</ele>
+        </trkpt>
+        <trkpt lat="52.42323" lon="16.9477">
+            <ele>74</ele>
+        </trkpt>
+        <trkpt lat="52.42794" lon="16.94701">
+            <ele>79</ele>
+        </trkpt>
+        <trkpt lat="52.43064" lon="16.94568">
+            <ele>80</ele>
+        </trkpt>
+        <trkpt lat="52.43187" lon="16.94268">
+            <ele>81</ele>
+        </trkpt>
+    </coords>
+</route>

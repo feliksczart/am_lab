@@ -5,4 +5,6 @@
     <string name="route_view"> Widok trasy </string>
     <string name="get_dir"> Get Direction </string>
     <string name="google_maps_key"> AIzaSyDyWOogYGlm4WhNOtELW1_17aFkOITxzvQ </string>
+    <string name="joggingroutes">JoggingRoutes</string>
+    <string name="loading_data">Loading Data</string>
 </resources>

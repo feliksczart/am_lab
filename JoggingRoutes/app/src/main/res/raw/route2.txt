@@ -1,0 +1,99 @@
+<route name="2">
+    <name name="Droga Dębińska" />
+    <length len="2km" />
+    <coords>
+        <trkpt lat="52.39885" lon="16.93504">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39834" lon="16.93484">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39803" lon="16.93471">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39756" lon="16.93453">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39697" lon="16.9343">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39642" lon="16.93406">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39593" lon="16.93386">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39545" lon="16.93366">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39502" lon="16.93349">
+            <ele>58</ele>
+        </trkpt>
+        <trkpt lat="52.39452" lon="16.9333">
+            <ele>58</ele>
+        </trkpt>
+        <trkpt lat="52.39413" lon="16.93316">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39373" lon="16.933">
+            <ele>58</ele>
+        </trkpt>
+        <trkpt lat="52.39286" lon="16.93264">
+            <ele>55</ele>
+        </trkpt>
+        <trkpt lat="52.39239" lon="16.93245">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.39179" lon="16.93221">
+            <ele>56</ele>
+        </trkpt>
+        <trkpt lat="52.39132" lon="16.93202">
+            <ele>56</ele>
+        </trkpt>
+        <trkpt lat="52.39083" lon="16.9318">
+            <ele>53</ele>
+        </trkpt>
+        <trkpt lat="52.39073" lon="16.93178">
+            <ele>53</ele>
+        </trkpt>
+        <trkpt lat="52.39051" lon="16.93168">
+            <ele>53</ele>
+        </trkpt>
+        <trkpt lat="52.39024" lon="16.93157">
+            <ele>53</ele>
+        </trkpt>
+        <trkpt lat="52.38952" lon="16.93128">
+            <ele>54</ele>
+        </trkpt>
+        <trkpt lat="52.38902" lon="16.93106">
+            <ele>55</ele>
+        </trkpt>
+        <trkpt lat="52.38824" lon="16.93076">
+            <ele>55</ele>
+        </trkpt>
+        <trkpt lat="52.38758" lon="16.93051">
+            <ele>56</ele>
+        </trkpt>
+        <trkpt lat="52.38706" lon="16.93032">
+            <ele>57</ele>
+        </trkpt>
+        <trkpt lat="52.3863" lon="16.93">
+            <ele>55</ele>
+        </trkpt>
+        <trkpt lat="52.38534" lon="16.92961">
+            <ele>54</ele>
+        </trkpt>
+        <trkpt lat="52.38434" lon="16.92919">
+            <ele>54</ele>
+        </trkpt>
+        <trkpt lat="52.38353" lon="16.92887">
+            <ele>55</ele>
+        </trkpt>
+        <trkpt lat="52.38306" lon="16.9287">
+            <ele>56</ele>
+        </trkpt>
+        <trkpt lat="52.38256" lon="16.92849">
+            <ele>56</ele>
+        </trkpt>
+    </coords>
+</route>
