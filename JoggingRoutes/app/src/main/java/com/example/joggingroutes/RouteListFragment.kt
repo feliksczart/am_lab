@@ -10,11 +10,12 @@ import android.widget.ArrayAdapter
 import android.widget.ListAdapter
 import android.widget.ListView
 import androidx.fragment.app.ListFragment
+import com.google.android.gms.maps.model.LatLng
 
 
 class RouteListFragment : ListFragment() {
     interface Listener {
-        fun itemClicked(id: Long)
+        fun itemClicked(id: Long, coords: MutableList<LatLng>)
     }
 
     private var listener: Listener? = null
@@ -41,6 +42,6 @@ class RouteListFragment : ListFragment() {
     }
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
-        listener?.itemClicked(id)
+        listener?.itemClicked(id,Route.routes[id.toInt()].getRouteCoords())
     }
 }

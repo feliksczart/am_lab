@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-//import android.support.v4.app.Fragment
 import kotlin.properties.Delegates
 
 
@@ -39,7 +38,7 @@ class RouteDetailFragment : Fragment() {
             val route: Route = Route.routes[routeId]
             title.text = route.getName()
             val description = view.findViewById<View>(R.id.textDescription) as TextView
-            description.text = route.getRouteCoords().toString()
+            description.text = route.getLength()
         }
     }
 

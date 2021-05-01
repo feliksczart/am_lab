@@ -7,9 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-
-//import android.support.v7.app.AppCompatActivity;
-//import android.support.v4.app.FragmentTransaction;
+import com.google.android.gms.maps.model.LatLng
 
 
 class MainActivity : AppCompatActivity(), RouteListFragment.Listener {
@@ -21,7 +19,7 @@ class MainActivity : AppCompatActivity(), RouteListFragment.Listener {
         supportActionBar?.hide()
     }
 
-    override fun itemClicked(id: Long) {
+    override fun itemClicked(id: Long, coords: MutableList<LatLng>) {
         val fragmentContainer = findViewById<View>(R.id.fragment_container)
         if (fragmentContainer != null) {
             val details = RouteDetailFragment()
@@ -36,6 +34,7 @@ class MainActivity : AppCompatActivity(), RouteListFragment.Listener {
 
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra(DetailActivity.EXTRA_COCKTAIL_ID, id.toInt())
+            intent.putParcelableArrayListExtra(DetailActivity.EXTRA_COORDS, ArrayList(coords))
             startActivity(intent)
         }
     }

@@ -1,6 +1,5 @@
 package com.example.joggingroutes
 
-import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 
 
@@ -11,7 +10,7 @@ import com.google.android.gms.maps.model.LatLng
 class Route(val name: String, val length: String, val route: MutableList<LatLng>) {
 
     companion object {
-        val routes = getData() //listOf(
+        val routes = getData()
 
         private fun getData(): List<Route> {
             val rts = LoadingActivity.data
@@ -106,10 +105,9 @@ class Route(val name: String, val length: String, val route: MutableList<LatLng>
         fun getRouteName(route: String): String {
             val list = route.split("\n")
             var result = ""
-            for (i in list){
-                if ("<name" in i){
+            for (i in list) {
+                if ("<name" in i) {
                     result = i.substringAfter('"').substringBefore('"')
-                    Log.i("s",result)
                     break
                 }
             }
@@ -119,10 +117,9 @@ class Route(val name: String, val length: String, val route: MutableList<LatLng>
         fun getRouteLength(route: String): String {
             val list = route.split("\n")
             var result = ""
-            for (i in list){
-                if ("<length" in i){
+            for (i in list) {
+                if ("<length" in i) {
                     result = i.substringAfter('"').substringBefore('"')
-                    Log.i("s",result)
                     break
                 }
             }
@@ -132,12 +129,14 @@ class Route(val name: String, val length: String, val route: MutableList<LatLng>
         fun getRouteCoords(route: String): MutableList<LatLng> {
             val list = route.split("\n")
             val result = mutableListOf<LatLng>()
-            for (i in list){
-                if ("<trkpt" in i){
-                    result.add(LatLng(
-                        i.substringAfter("lat=\"").substringBefore('"').toDouble(),
-                        i.substringAfter("lon=\"").substringBefore('"').toDouble()
-                    ))
+            for (i in list) {
+                if ("<trkpt" in i) {
+                    result.add(
+                        LatLng(
+                            i.substringAfter("lat=\"").substringBefore('"').toDouble(),
+                            i.substringAfter("lon=\"").substringBefore('"').toDouble()
+                        )
+                    )
                 }
             }
             return result
