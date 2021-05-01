@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#212d3b"
+    android:background="#000000"
     tools:context=".LoadingActivity">
 
     <TextView
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
                     android:text="@string/loading_data"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#ffffff"
                     android:textSize="18sp" />
 
                 <ProgressBar
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:background="#00FFFFFF"
                     android:indeterminate="true"
-                    android:indeterminateTint="@color/myblue"
+                    android:indeterminateTint="#ffffff"
                     android:paddingTop="5dp"
                     android:paddingBottom="30dp"
                     tools:ignore="UnusedAttribute" />

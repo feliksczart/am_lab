@@ -21,8 +21,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     lateinit var map: GoogleMap
-    lateinit var place1: MarkerOptions
-    lateinit var place2: MarkerOptions
     lateinit var coords: MutableList<LatLng>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,9 +33,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment =
             supportFragmentManager.findFragmentById(R.id.map_frag) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
-
-        place1 = MarkerOptions().position(LatLng(52.38327, 16.97765)).title("Location 1")
-        place2 = MarkerOptions().position(LatLng(52.38396, 16.9785)).title("Location 2")
 
         coords = intent.extras!![EXTRA_COORDS] as MutableList<LatLng>
     }

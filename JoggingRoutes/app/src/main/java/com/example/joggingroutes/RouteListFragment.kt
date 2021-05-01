@@ -1,6 +1,5 @@
 package com.example.joggingroutes
 
-import android.R
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -29,7 +28,7 @@ class RouteListFragment : ListFragment() {
             names[i] = Route.routes[i].getName()
         }
         val adapter: Any = ArrayAdapter<Any?>(
-            inflater.context, R.layout.simple_list_item_1, names
+            inflater.context, R.layout.my_list_item, names
         )
         listAdapter = adapter as ListAdapter?
 
