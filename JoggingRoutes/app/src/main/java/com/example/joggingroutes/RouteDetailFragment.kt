@@ -47,8 +47,10 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
             val title = view.findViewById<View>(R.id.textTitle) as TextView
             val route: Route = Route.routes[routeId]
             title.text = route.getName()
+            title.setBackgroundColor(Color.WHITE)
             val description = view.findViewById<View>(R.id.textDescription) as TextView
             description.text = route.getLength()
+            description.setBackgroundColor(Color.WHITE)
 
             val mapFragment = childFragmentManager.findFragmentById(R.id.map_frag_tab) as? SupportMapFragment
             mapFragment?.getMapAsync(this)

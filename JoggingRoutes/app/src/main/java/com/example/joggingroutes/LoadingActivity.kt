@@ -31,7 +31,6 @@ class LoadingActivity : AppCompatActivity() {
                     View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
     }
     private val showPart2Runnable = Runnable {
-        // Delayed display of UI elements
         supportActionBar?.show()
         fullscreenContentControls.visibility = View.VISIBLE
     }
@@ -67,15 +66,10 @@ class LoadingActivity : AppCompatActivity() {
 
         isFullscreen = true
 
-        // Set up the user interaction to manually show or hide the system UI.
         fullscreenContent = findViewById(R.id.fullscreen_content)
         fullscreenContent.setOnClickListener { toggle() }
 
         fullscreenContentControls = findViewById(R.id.fullscreen_content_controls)
-
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
     }
 
     private fun getRes() {
@@ -104,8 +98,8 @@ class LoadingActivity : AppCompatActivity() {
 
     private fun addRoute(scanner: Scanner) {
         var route = ""
-        while (scanner.hasNext()){
-            route += scanner.nextLine()+"\n"
+        while (scanner.hasNext()) {
+            route += scanner.nextLine() + "\n"
         }
         data.add(route)
     }
@@ -124,12 +118,10 @@ class LoadingActivity : AppCompatActivity() {
     }
 
     private fun hide() {
-        // Hide UI first
         supportActionBar?.hide()
         fullscreenContentControls.visibility = View.GONE
         isFullscreen = false
 
-        // Schedule a runnable to remove the status and navigation bar after a delay
         hideHandler.removeCallbacks(showPart2Runnable)
         hideHandler.postDelayed(hidePart2Runnable, UI_ANIMATION_DELAY.toLong())
     }
@@ -141,7 +133,6 @@ class LoadingActivity : AppCompatActivity() {
                     View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         isFullscreen = true
 
-        // Schedule a runnable to display UI elements after a delay
         hideHandler.removeCallbacks(hidePart2Runnable)
         hideHandler.postDelayed(showPart2Runnable, UI_ANIMATION_DELAY.toLong())
     }
@@ -157,6 +148,7 @@ class LoadingActivity : AppCompatActivity() {
 
     companion object {
         val data = mutableListOf<String>()
+
         /**
          * Whether or not the system UI should be auto-hidden after
          * [AUTO_HIDE_DELAY_MILLIS] milliseconds.
