@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#000000">
 
     <TextView
         android:id="@+id/time_view"
@@ -13,31 +15,83 @@
         android:layout_gravity="center_horizontal"
         android:textAppearance="@android:style/TextAppearance.Large"
         android:textColor="#FFFFFF"
-        android:textSize="56sp" />
+        android:textSize="24sp" />
 
-    <Button
-        android:id="@+id/start_button"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="@string/start" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/stop_button"
+        <Button
+            android:id="@+id/start_button"
+            android:layout_width="50sp"
+            android:layout_height="30sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="3sp"
+            android:layout_marginRight="3sp"
+            android:paddingLeft="2dp"
+            android:paddingTop="2dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="2dp"
+            android:text="@string/start"
+            android:textColor="#000000"
+            android:textSize="10sp"
+            app:backgroundTint="#FFFFFF" />
+
+        <Button
+            android:id="@+id/stop_button"
+            android:layout_width="50sp"
+            android:layout_height="30sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="3sp"
+            android:layout_marginLeft="3sp"
+            android:paddingLeft="2dp"
+            android:paddingTop="2dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="2dp"
+            android:text="@string/stop"
+            android:textColor="#000000"
+            android:textSize="10sp"
+            app:backgroundTint="#FFFFFF" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:text="@string/stop"
-        android:visibility="invisible" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/reset_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="8dp"
-        android:text="@string/reset"
-        android:visibility="invisible" />
+        <Button
+            android:id="@+id/reset_button"
+            android:layout_width="50sp"
+            android:layout_height="30sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="3sp"
+            android:layout_marginRight="3sp"
+            android:paddingLeft="2dp"
+            android:paddingTop="2dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="2dp"
+            android:text="@string/reset"
+            android:textColor="#000000"
+            android:textSize="10sp"
+            app:backgroundTint="#FFFFFF" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="50sp"
+            android:layout_height="30sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="3sp"
+            android:layout_marginLeft="3sp"
+            android:paddingLeft="2dp"
+            android:paddingTop="2dp"
+            android:paddingRight="2dp"
+            android:paddingBottom="2dp"
+            android:text="@string/save"
+            android:textColor="#000000"
+            android:textSize="10sp"
+            app:backgroundTint="#FFFFFF" />
+    </LinearLayout>
+
 </LinearLayout>
