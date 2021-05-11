@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,6 +27,13 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
             routeId = savedInstanceState.getLong("routeId").toInt()
+        } else {
+            val stoper = StoperFragment()
+            val ft: FragmentTransaction = childFragmentManager.beginTransaction()
+            ft.add(R.id.stoper_container, stoper)
+            ft.addToBackStack(null)
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            ft.commit()
         }
     }
 
@@ -67,7 +75,7 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
         map = googleMap
 
         for (i in 0 .. coords.size-2){
-            val line = PolylineOptions().add(coords[i],coords[i+1])
+            val line = PolylineOptions().add(coords[i], coords[i + 1])
                 .width(7f).color(Color.RED)
             map.addPolyline(line)
         }

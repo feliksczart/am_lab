@@ -15,6 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JoggingRoutes">
+        <activity android:name=".TempActivity" />
 
         <meta-data
             android:name="com.google.android.version"
@@ -26,8 +27,7 @@
         <activity android:name=".DetailActivity" />
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
-        </activity>
+            android:configChanges="orientation|screenSize|keyboardHidden" />
         <activity android:name=".LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
