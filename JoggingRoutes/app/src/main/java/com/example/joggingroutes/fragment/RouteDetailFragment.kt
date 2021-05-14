@@ -24,6 +24,10 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
     lateinit var coords: MutableList<LatLng>
     lateinit var map: GoogleMap
 
+    companion object {
+        lateinit var routeName: String
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
@@ -56,6 +60,7 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
             val title = view.findViewById<View>(R.id.textTitle) as TextView
             val route: Route = Route.routes[routeId]
             title.text = route.getName()
+            routeName = route.getName()
             title.setBackgroundColor(Color.parseColor("#000000"))
             val description = view.findViewById<View>(R.id.textDescription) as TextView
             description.text = route.getLength()
@@ -82,5 +87,4 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
         }
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(coords[0], 16f))
     }
-
 }

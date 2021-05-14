@@ -42,7 +42,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     fun reguser(view: View) {
-        if (rePassword.text.toString() == password.text.toString()) {
+        if (rePassword.text.toString() == password.text.toString() && password.text.toString() != "" && username.text.toString() != "") {
             dbUsername = username.text.toString()
             dbPassword = password.text.toString()
 
@@ -51,7 +51,7 @@ class RegisterActivity : AppCompatActivity() {
             dbHelper.execute(method, dbUsername, dbPassword)
             finish()
         } else {
-            Toast.makeText(applicationContext,"Passwords have to be the same!",Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext,"Correct the mistake!",Toast.LENGTH_SHORT).show()
         }
     }
 }

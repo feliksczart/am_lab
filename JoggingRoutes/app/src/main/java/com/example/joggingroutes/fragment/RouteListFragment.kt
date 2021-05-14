@@ -15,7 +15,7 @@ import com.google.android.gms.maps.model.LatLng
 
 class RouteListFragment : ListFragment() {
     interface Listener {
-        fun itemClicked(id: Long, coords: MutableList<LatLng>)
+        fun itemClicked(id: Long, coords: MutableList<LatLng>, routeName:String)
     }
 
     private var listener: Listener? = null
@@ -42,6 +42,6 @@ class RouteListFragment : ListFragment() {
     }
 
     override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
-        listener?.itemClicked(id,Route.routes[id.toInt()].getRouteCoords())
+        listener?.itemClicked(id,Route.routes[id.toInt()].getRouteCoords(),Route.routes[id.toInt()].getName())
     }
 }

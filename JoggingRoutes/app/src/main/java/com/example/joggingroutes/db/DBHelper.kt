@@ -23,6 +23,7 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
     @SuppressLint("StaticFieldLeak")
     var ctx: Context = ctx
     lateinit var method: String
+    lateinit var username: String
     override fun doInBackground(vararg params: String?): String? {
         method = params[0].toString()
         if (method == "register") {
@@ -60,6 +61,7 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
         }
         else if (method == "login") {
             val name = params[1]
+            username = name.toString()
             val password = params[2]
             lateinit var response: String
             val log_url = "https://192.168.0.19/phpJogging/login.php"
@@ -103,6 +105,46 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
                 e.printStackTrace()
             }
 
+        }else if (method == "insert result") {
+            val name = params[1]
+            val route = params[2]
+            val result = params[3]
+            val date = params[4]
+            val res_url = "https://192.168.0.19/phpJogging/insertresult.php"
+            try {
+                val url = URL(res_url)
+                HttpsTrustManager.allowAllSSL()
+                val httpURLConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+                httpURLConnection.requestMethod = "POST"
+                httpURLConnection.doOutput = true
+                val os: OutputStream = httpURLConnection.outputStream
+                val bufferedWriter = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
+                val data: String =
+                    URLEncoder.encode("name", "UTF-8").toString() + "=" + URLEncoder.encode(
+                        name, "UTF-8"
+                    ) + "&" +
+                            URLEncoder.encode("route", "UTF-8").toString() + "=" + URLEncoder.encode(
+                        route, "UTF-8"
+                    ) + "&" +
+                            URLEncoder.encode("result", "UTF-8").toString() + "=" + URLEncoder.encode(
+                        result, "UTF-8"
+                    ) + "&" +
+                            URLEncoder.encode("date", "UTF-8").toString() + "=" + URLEncoder.encode(
+                        date, "UTF-8"
+                    )
+
+                bufferedWriter.write(data)
+                bufferedWriter.flush()
+                bufferedWriter.close()
+                os.close()
+                val `is`: InputStream = httpURLConnection.inputStream
+                `is`.close()
+                return "Success"
+            } catch (e: MalformedURLException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
         }
         return null
     }
@@ -111,6 +153,7 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
         if (method == "login" && result == "Success"){
             Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show()
             val intent = Intent(ctx, MainActivity::class.java)
+            intent.putExtra("username",username)
             ctx.startActivity(intent)
             //(ctx as Activity).finish()
         } else if (method == "login" && result == "Error"){

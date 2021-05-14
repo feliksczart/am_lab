@@ -32,7 +32,6 @@ class LoginActivity : AppCompatActivity() {
         username = findViewById(R.id.nickLogin)
         password = findViewById(R.id.passwordLogin)
         val registerButton = findViewById<TextView>(R.id.goRegister)
-        val loginButton = findViewById<Button>(R.id.loginButton)
 
         registerButton.setOnClickListener{
             val intent = Intent(this, RegisterActivity::class.java)
@@ -47,6 +46,6 @@ class LoginActivity : AppCompatActivity() {
             val method = "login"
             val dbHelper = DBHelper(this)
             dbHelper.execute(method, dbUsername, dbPassword)
-            //finish()
+            finish()
     }
 }

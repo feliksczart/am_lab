@@ -1,14 +1,23 @@
 package com.example.joggingroutes.fragment
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.example.joggingroutes.DBHelper
 import com.example.joggingroutes.R
+import com.example.joggingroutes.activity.MainActivity
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
 
 
 @Suppress("DEPRECATION")
@@ -39,6 +48,8 @@ class StoperFragment : Fragment(), View.OnClickListener {
         stopButton.setOnClickListener(this)
         val resetButton: Button = layout.findViewById<View>(R.id.reset_button) as Button
         resetButton.setOnClickListener(this)
+        val saveButton: Button = layout.findViewById<View>(R.id.save_button) as Button
+        saveButton.setOnClickListener(this)
         return layout
     }
 
@@ -68,6 +79,7 @@ class StoperFragment : Fragment(), View.OnClickListener {
             R.id.start_button -> onClickStart()
             R.id.stop_button -> onClickStop()
             R.id.reset_button -> onClickReset()
+            R.id.save_button -> onClickSave()
         }
     }
 
@@ -82,6 +94,17 @@ class StoperFragment : Fragment(), View.OnClickListener {
     private fun onClickReset() {
         running = false
         seconds = 0
+    }
+
+
+    @SuppressLint("SimpleDateFormat")
+    private fun onClickSave() {
+        val saveSeconds = seconds.toString()
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        val saveDate = sdf.format(Date())
+        val route = RouteDetailFragment.routeName
+        val username = MainActivity.username
+        insertData(username,route,saveSeconds,saveDate)
     }
 
     private fun runStoper(view: View) {
@@ -100,5 +123,11 @@ class StoperFragment : Fragment(), View.OnClickListener {
                 handler.postDelayed(this, 1000)
             }
         })
+    }
+
+    private fun insertData(username: String,route: String,saveSeconds: String,saveDate:String) {
+        val method = "insert result"
+        val dbHelper = context?.let { DBHelper(it) }
+        dbHelper?.execute(method, username, route,saveSeconds,saveDate)
     }
 }

@@ -4,6 +4,7 @@ package com.example.joggingroutes.activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
@@ -17,6 +18,10 @@ import com.google.android.gms.maps.model.LatLng
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity(), RouteListFragment.Listener {
 
+    companion object {
+        lateinit var username: String
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,9 +29,11 @@ class MainActivity : AppCompatActivity(), RouteListFragment.Listener {
         actionBar?.hide()
         supportActionBar?.hide()
         window.decorView.setBackgroundColor(Color.BLACK)
+
+        username = intent.getStringExtra("username").toString()
     }
 
-    override fun itemClicked(id: Long, coords: MutableList<LatLng>) {
+    override fun itemClicked(id: Long, coords: MutableList<LatLng>,routeName:String) {
         val fragmentContainer = findViewById<View>(R.id.fragment_container)
         if (fragmentContainer != null) {
             val details = RouteDetailFragment()
