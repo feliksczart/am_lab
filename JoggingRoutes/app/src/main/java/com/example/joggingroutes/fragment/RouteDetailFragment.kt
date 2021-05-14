@@ -1,11 +1,14 @@
 package com.example.joggingroutes.fragment
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.os.TestLooperManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -18,9 +21,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.tasks.OnCompleteListener
 import kotlin.properties.Delegates
 
 
+@SuppressLint("NewApi", "CutPasteId")
 @Suppress("DEPRECATION")
 class RouteDetailFragment : Fragment(), OnMapReadyCallback {
     private var routeId by Delegates.notNull<Int>()
@@ -32,7 +37,7 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState)
         if (savedInstanceState != null) {
             routeId = savedInstanceState.getLong("routeId").toInt()
         } else {
@@ -69,14 +74,16 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
             description.text = route.getLength()
             description.setBackgroundColor(Color.parseColor("#000000"))
 
-            val mapFragment = childFragmentManager.findFragmentById(R.id.map_frag_tab) as? SupportMapFragment
+            val mapFragment =
+                childFragmentManager.findFragmentById(R.id.map_frag_tab) as? SupportMapFragment
             mapFragment?.getMapAsync(this)
             coords = route.getRouteCoords()
 
-            val personalBest = view.findViewById<View>(R.id.personal_best) as TextView
-            val personalLast = view.findViewById<View>(R.id.personal_last) as TextView
+            val seeStats = view.findViewById<Button>(R.id.see_stats)
 
-            val respond = getResults(MainActivity.username,route.getName())
+            seeStats.setOnClickListener{
+                getResults(MainActivity.username, route.getName())
+            }
         }
     }
 
@@ -87,7 +94,7 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-        for (i in 0 .. coords.size-2){
+        for (i in 0..coords.size - 2) {
             val line = PolylineOptions().add(coords[i], coords[i + 1])
                 .width(7f).color(Color.RED)
             map.addPolyline(line)
@@ -95,7 +102,7 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(coords[0], 16f))
     }
 
-    fun getResults(username: String, routeName: String){
+    fun getResults(username: String, routeName: String) {
         val method = "get results"
         val dbHelper = context?.let { DBHelper(it) }
         dbHelper?.execute(method, username, routeName)

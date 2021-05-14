@@ -9,8 +9,11 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.Toast
+import com.example.joggingroutes.activity.DetailActivity
 import com.example.joggingroutes.activity.MainActivity
+import com.example.joggingroutes.activity.StatsActivity
 import com.example.joggingroutes.db.HttpsTrustManager
+import com.example.joggingroutes.fragment.RouteDetailFragment
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
@@ -90,8 +93,10 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
                 val bufferedReader = BufferedReader(InputStreamReader(`is`))
 
                 try {
-                    while ((bufferedReader.readLine().also { response = it }) != null){}
-                } catch (e: Exception){}
+                    while ((bufferedReader.readLine().also { response = it }) != null) {
+                    }
+                } catch (e: Exception) {
+                }
 
                 bufferedReader.close()
                 `is`.close()
@@ -103,7 +108,7 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
                 e.printStackTrace()
             }
 
-        }else if (method == "insert result") {
+        } else if (method == "insert result") {
             val name = params[1]
             val route = params[2]
             val result = params[3]
@@ -121,10 +126,12 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
                     URLEncoder.encode("name", "UTF-8").toString() + "=" + URLEncoder.encode(
                         name, "UTF-8"
                     ) + "&" +
-                            URLEncoder.encode("route", "UTF-8").toString() + "=" + URLEncoder.encode(
+                            URLEncoder.encode("route", "UTF-8")
+                                .toString() + "=" + URLEncoder.encode(
                         route, "UTF-8"
                     ) + "&" +
-                            URLEncoder.encode("result", "UTF-8").toString() + "=" + URLEncoder.encode(
+                            URLEncoder.encode("result", "UTF-8")
+                                .toString() + "=" + URLEncoder.encode(
                         result, "UTF-8"
                     ) + "&" +
                             URLEncoder.encode("date", "UTF-8").toString() + "=" + URLEncoder.encode(
@@ -178,7 +185,7 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
                     }
                 } catch (e: Exception) {
                 }
-                Log.i("aaa",response)
+                Log.i("aa",response)
                 bufferedReader.close()
                 `is`.close()
                 httpURLConnection.disconnect()
@@ -193,16 +200,20 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
     }
 
     override fun onPostExecute(result: String?) {
-        if (method == "login" && result == "Success"){
+        if (method == "login" && result == "Success") {
             Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show()
             val intent = Intent(ctx, MainActivity::class.java)
-            intent.putExtra("username",username)
+            intent.putExtra("username", username)
             ctx.startActivity(intent)
             //(ctx as Activity).finish()
-        } else if (method == "login" && result == "Error"){
+        } else if (method == "login" && result == "Error") {
             Toast.makeText(ctx, "Error", Toast.LENGTH_SHORT).show()
-        } else if (method == "register"){
+        } else if (method == "register") {
             Toast.makeText(ctx, "Success", Toast.LENGTH_SHORT).show()
+        } else if (method == "get results") {
+            val intent = Intent(ctx, StatsActivity::class.java)
+            intent.putExtra("result", result)
+            ctx.startActivity(intent)
         }
     }
 
@@ -213,5 +224,4 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
     override fun onProgressUpdate(vararg values: Void?) {
         super.onProgressUpdate(*values)
     }
-
 }

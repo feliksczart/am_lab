@@ -16,4 +16,8 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="repeat_password">Repeat Password</string>
+    <string name="see_stats">See stats</string>
+    <string name="your_personal_best">Your personal best:</string>
+    <string name="your_last_result">Your last result:</string>
+    <string name="all_results_for_this_rute">All results for this rute:</string>
 </resources>
