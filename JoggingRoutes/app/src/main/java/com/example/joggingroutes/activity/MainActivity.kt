@@ -1,5 +1,5 @@
 //http://www.runmap.net/en/regional/Poland/Greater+Poland+Voivodeship/Pozna%C5%84/
-package com.example.joggingroutes
+package com.example.joggingroutes.activity
 
 import android.content.Intent
 import android.graphics.Color
@@ -7,6 +7,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import com.example.joggingroutes.R
+import com.example.joggingroutes.activity.DetailActivity
+import com.example.joggingroutes.fragment.RouteDetailFragment
+import com.example.joggingroutes.fragment.RouteListFragment
 import com.google.android.gms.maps.model.LatLng
 
 

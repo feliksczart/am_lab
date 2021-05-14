@@ -1,4 +1,4 @@
-package com.example.joggingroutes
+package com.example.joggingroutes.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -12,8 +12,10 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.joggingroutes.R
 import java.util.*
 
+@Suppress("DEPRECATION")
 class LoadingActivity : AppCompatActivity() {
     private lateinit var fullscreenContent: TextView
     private lateinit var fullscreenContentControls: LinearLayout

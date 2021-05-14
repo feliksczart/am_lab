@@ -1,5 +1,6 @@
-package com.example.joggingroutes
+package com.example.joggingroutes.fragment
 
+import com.example.joggingroutes.activity.LoadingActivity
 import com.google.android.gms.maps.model.LatLng
 
 

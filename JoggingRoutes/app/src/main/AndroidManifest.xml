@@ -15,10 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JoggingRoutes">
-        <activity android:name=".RegisterActivity"></activity>
-        <activity android:name=".LoginActivity" >
+        <activity android:name=".activity.RegisterActivity"></activity>
+        <activity android:name=".activity.LoginActivity" >
         </activity>
-        <activity android:name=".TempActivity" />
+        <activity android:name=".activity.TempActivity" />
 
         <meta-data
             android:name="com.google.android.version"
@@ -27,11 +27,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".DetailActivity" />
+        <activity android:name=".activity.DetailActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />
-        <activity android:name=".LoadingActivity">
+        <activity android:name=".activity.LoadingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

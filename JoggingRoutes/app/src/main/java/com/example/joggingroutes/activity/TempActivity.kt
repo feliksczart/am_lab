@@ -1,8 +1,10 @@
-package com.example.joggingroutes
+package com.example.joggingroutes.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import com.example.joggingroutes.R
+import com.example.joggingroutes.fragment.StoperFragment
 
 
 class TempActivity : AppCompatActivity() {

@@ -9,6 +9,8 @@ import android.content.Intent
 import android.os.AsyncTask
 import android.util.Log
 import android.widget.Toast
+import com.example.joggingroutes.activity.MainActivity
+import com.example.joggingroutes.db.HttpsTrustManager
 import java.io.*
 import java.net.HttpURLConnection
 import java.net.MalformedURLException

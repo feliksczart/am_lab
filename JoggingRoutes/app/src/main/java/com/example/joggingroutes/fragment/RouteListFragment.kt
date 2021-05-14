@@ -1,4 +1,4 @@
-package com.example.joggingroutes
+package com.example.joggingroutes.fragment
 
 import android.content.Context
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListAdapter
 import android.widget.ListView
 import androidx.fragment.app.ListFragment
+import com.example.joggingroutes.R
 import com.google.android.gms.maps.model.LatLng
 
 

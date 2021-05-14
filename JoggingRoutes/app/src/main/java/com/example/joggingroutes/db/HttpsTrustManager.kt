@@ -1,4 +1,4 @@
-package com.example.joggingroutes
+package com.example.joggingroutes.db
 
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
