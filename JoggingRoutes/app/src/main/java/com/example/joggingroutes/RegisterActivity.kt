@@ -8,9 +8,17 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 
 @Suppress("DEPRECATION")
 class RegisterActivity : AppCompatActivity() {
+
+    lateinit var dbUsername: String
+    lateinit var dbPassword: String
+    lateinit var username: EditText
+    lateinit var password: EditText
+    lateinit var rePassword: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -21,13 +29,27 @@ class RegisterActivity : AppCompatActivity() {
 
         val registerButton = findViewById<Button>(R.id.registerButton)
         val loginButton = findViewById<TextView>(R.id.goLogin)
-        val username = findViewById<EditText>(R.id.nickRegister)
-        val password = findViewById<EditText>(R.id.passwordRegister)
-        val rePassword = findViewById<EditText>(R.id.repeatPasswordRegister)
+        username = findViewById(R.id.nickRegister)
+        password = findViewById(R.id.passwordRegister)
+        rePassword = findViewById(R.id.repeatPasswordRegister)
 
-        loginButton.setOnClickListener{
+        loginButton.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    fun reguser(view: View) {
+        if (rePassword.text.toString() == password.text.toString()) {
+            dbUsername = username.text.toString()
+            dbPassword = password.text.toString()
+
+            val method = "register"
+            val dbHelper = DBHelper(this)
+            dbHelper.execute(method, dbUsername, dbPassword)
+            finish()
+        } else {
+            Toast.makeText(applicationContext,"Passwords have to be the same!",Toast.LENGTH_SHORT).show()
         }
     }
 }

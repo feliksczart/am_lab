@@ -2,6 +2,7 @@
   <dictionary name="FeliksCzart">
     <words>
       <w>coords</w>
+      <w>reguser</w>
     </words>
   </dictionary>
 </component>

@@ -99,7 +99,8 @@
                         android:text="@string/login"
                         android:textColor="#000000"
                         android:textStyle="bold"
-                        app:backgroundTint="#FFFFFF" />
+                        app:backgroundTint="#FFFFFF"
+                        android:onClick="loguser"/>
 
                 </LinearLayout>
 
