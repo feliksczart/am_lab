@@ -58,8 +58,7 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-        }
-        else if (method == "login") {
+        } else if (method == "login") {
             val name = params[1]
             username = name.toString()
             val password = params[2]
@@ -94,7 +93,6 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
                     while ((bufferedReader.readLine().also { response = it }) != null){}
                 } catch (e: Exception){}
 
-                Log.i("siem", response)
                 bufferedReader.close()
                 `is`.close()
                 httpURLConnection.disconnect()
@@ -140,6 +138,51 @@ class DBHelper(ctx: Context) : AsyncTask<String?, Void?, String?>() {
                 val `is`: InputStream = httpURLConnection.inputStream
                 `is`.close()
                 return "Success"
+            } catch (e: MalformedURLException) {
+                e.printStackTrace()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        } else if (method == "get results") {
+            val name = params[1]
+            val route = params[2]
+            lateinit var response: String
+            val log_url = "https://192.168.0.19/phpJogging/getresults.php"
+            try {
+                val url = URL(log_url)
+                HttpsTrustManager.allowAllSSL()
+                val httpURLConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+
+                httpURLConnection.requestMethod = "POST"
+                httpURLConnection.doOutput = true
+                val os: OutputStream = httpURLConnection.outputStream
+                val bufferedWriter = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
+                val data: String =
+                    URLEncoder.encode("name", "UTF-8").toString() + "=" + URLEncoder.encode(
+                        name, "UTF-8"
+                    ) + "&" +
+                            URLEncoder.encode("route", "UTF-8") + "=" + URLEncoder.encode(
+                        route, "UTF-8"
+                    )
+
+                bufferedWriter.write(data)
+                bufferedWriter.flush()
+                bufferedWriter.close()
+                os.close()
+
+                val `is`: InputStream = httpURLConnection.inputStream
+                val bufferedReader = BufferedReader(InputStreamReader(`is`))
+
+                try {
+                    while ((bufferedReader.readLine().also { response = it }) != null) {
+                    }
+                } catch (e: Exception) {
+                }
+                Log.i("aaa",response)
+                bufferedReader.close()
+                `is`.close()
+                httpURLConnection.disconnect()
+                return response
             } catch (e: MalformedURLException) {
                 e.printStackTrace()
             } catch (e: IOException) {

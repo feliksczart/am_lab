@@ -100,7 +100,7 @@ class StoperFragment : Fragment(), View.OnClickListener {
     @SuppressLint("SimpleDateFormat")
     private fun onClickSave() {
         val saveSeconds = seconds.toString()
-        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         val saveDate = sdf.format(Date())
         val route = RouteDetailFragment.routeName
         val username = MainActivity.username

@@ -2,13 +2,16 @@ package com.example.joggingroutes.fragment
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.TestLooperManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.joggingroutes.DBHelper
 import com.example.joggingroutes.R
+import com.example.joggingroutes.activity.MainActivity
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -68,8 +71,12 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
 
             val mapFragment = childFragmentManager.findFragmentById(R.id.map_frag_tab) as? SupportMapFragment
             mapFragment?.getMapAsync(this)
-
             coords = route.getRouteCoords()
+
+            val personalBest = view.findViewById<View>(R.id.personal_best) as TextView
+            val personalLast = view.findViewById<View>(R.id.personal_last) as TextView
+
+            val respond = getResults(MainActivity.username,route.getName())
         }
     }
 
@@ -86,5 +93,11 @@ class RouteDetailFragment : Fragment(), OnMapReadyCallback {
             map.addPolyline(line)
         }
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(coords[0], 16f))
+    }
+
+    fun getResults(username: String, routeName: String){
+        val method = "get results"
+        val dbHelper = context?.let { DBHelper(it) }
+        dbHelper?.execute(method, username, routeName)
     }
 }
