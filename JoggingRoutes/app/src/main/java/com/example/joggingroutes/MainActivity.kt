@@ -1,7 +1,6 @@
 //http://www.runmap.net/en/regional/Poland/Greater+Poland+Voivodeship/Pozna%C5%84/
 package com.example.joggingroutes
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -20,7 +19,7 @@ class MainActivity : AppCompatActivity(), RouteListFragment.Listener {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
         supportActionBar?.hide()
-        window.decorView.setBackgroundColor(Color.BLACK);
+        window.decorView.setBackgroundColor(Color.BLACK)
     }
 
     override fun itemClicked(id: Long, coords: MutableList<LatLng>) {
