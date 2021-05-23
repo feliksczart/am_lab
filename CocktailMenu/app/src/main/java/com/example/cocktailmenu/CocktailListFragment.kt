@@ -12,12 +12,15 @@ import android.widget.RelativeLayout
 import androidx.fragment.app.ListFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.properties.Delegates
 
 
 class CocktailListFragment : ListFragment() {
 
     var myrv: RecyclerView? = null
     private var myAdapter: RecyclerView.Adapter<*>? = null
+    var isEditing: Boolean = false
+    var IS_EDITING_KEY by Delegates.notNull<Boolean>()
 
     interface Listener {
         fun itemClicked(id: Long)
