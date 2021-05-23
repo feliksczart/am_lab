@@ -8,10 +8,16 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListAdapter
 import android.widget.ListView
+import android.widget.RelativeLayout
 import androidx.fragment.app.ListFragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 class CocktailListFragment : ListFragment() {
+
+    var myrv: RecyclerView? = null
+    private var myAdapter: RecyclerView.Adapter<*>? = null
 
     interface Listener {
         fun itemClicked(id: Long)
@@ -23,6 +29,10 @@ class CocktailListFragment : ListFragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        //TODO GRID
+        //val rootView: View = inflater.inflate(android.R.layout.activity_list_item, container, false)
+        val rootViewx: View? = super.onCreateView(inflater, container, savedInstanceState)
+
         val names = arrayOfNulls<String>(Cocktail.cocktails.size)
         for (i in names.indices) {
             names[i] = Cocktail.cocktails[i].getName()
@@ -32,7 +42,12 @@ class CocktailListFragment : ListFragment() {
         )
         listAdapter = adapter as ListAdapter?
 
-        return super.onCreateView(inflater, container, savedInstanceState)
+//        myrv = rootView.findViewById(R.id.recycle_view)
+//        myAdapter = CustomAdapter(names)
+//        myrv!!.layoutManager = GridLayoutManager(context, 3)
+//        myrv!!.adapter = myAdapter
+
+        return rootViewx
     }
 
     override fun onAttach(context: Context) {
