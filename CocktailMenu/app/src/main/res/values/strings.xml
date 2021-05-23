@@ -6,4 +6,7 @@
     <string name="cocktail_name">Nazwa drinka</string>
     <string name="cocktail_recipe">Składniki i sposób przygotowania</string>
     <string name="page_title">PageTitle</string>
+    <string name="mainScreen">Main Screen</string>
+    <string name="ordinary">Ordinary Drink</string>
+    <string name="cocktails">Cocktails</string>
 </resources>

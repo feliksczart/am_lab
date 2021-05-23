@@ -1,33 +1,22 @@
 package com.example.cocktailmenu
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 
-
+//https://stackoverflow.com/questions/32700818/how-to-open-a-fragment-on-button-click-from-a-fragment-in-android
 @Suppress("DEPRECATION")
-class DetailActivity : AppCompatActivity() {
-
-    companion object {
-        val EXTRA_COCKTAIL_ID = "id"
-    }
-
+class OrdinaryListActivity : AppCompatActivity(), CocktailListFragment.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        setContentView(R.layout.activity_ordinary_list)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
         supportActionBar?.hide()
 
-        val frag =
-            supportFragmentManager.findFragmentById(R.id.detail_frag) as CocktailDetailFragment?
-
-        val cocktailId = intent.extras!![EXTRA_COCKTAIL_ID] as Int
-        frag!!.setCocktail(cocktailId)
-
-        val topAppBar = findViewById<MaterialToolbar>(R.id.topAppBarDetails)
+        val topAppBar = findViewById<MaterialToolbar>(R.id.topAppBar)
 
         topAppBar.setNavigationOnClickListener {
             // Handle navigation icon press
@@ -49,5 +38,11 @@ class DetailActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    override fun itemClicked(id: Long) {
+        val intent = Intent(this, DetailActivity::class.java)
+        intent.putExtra(DetailActivity.EXTRA_COCKTAIL_ID, id.toInt())
+        startActivity(intent)
     }
 }

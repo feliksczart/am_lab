@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/ic_mainScreen"
+        android:icon="@drawable/ic_main"
+        android:title="@string/mainScreen"
+        app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/icOrdinary"
+        android:icon="@drawable/ic_ordinary_drink"
+        android:title="@string/ordinary"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/icCocktails"
+        android:icon="@drawable/ic_cocktails"
+        android:title="@string/cocktails"
+        app:showAsAction="ifRoom" />
 </menu>

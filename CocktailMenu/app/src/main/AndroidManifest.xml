@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CocktailMenu">
         <activity android:name=".DetailActivity" />
-        <activity android:name=".ListActivity">
+        <activity android:name=".OrdinaryListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

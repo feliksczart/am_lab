@@ -29,19 +29,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Note: A RecyclerView can also be used -->
-<!--    <androidx.core.widget.NestedScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
-
-<!--        <androidx.fragment.app.FragmentContainerView-->
-<!--            android:id="@+id/fragment_container"-->
-<!--            android:name="com.example.cocktailmenu.CocktailListFragment"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent" />-->
-
-<!--    </androidx.core.widget.NestedScrollView>-->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:name="com.example.cocktailmenu.CocktailListFragment"
