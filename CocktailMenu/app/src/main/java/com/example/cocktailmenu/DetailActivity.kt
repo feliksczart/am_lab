@@ -1,10 +1,12 @@
 package com.example.cocktailmenu
 
-import android.graphics.Color
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 @Suppress("DEPRECATION")
@@ -48,6 +50,19 @@ class DetailActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+        }
+
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
+
+        fab.setOnClickListener {
+            val alertDialog: AlertDialog = AlertDialog.Builder(this).create()
+            alertDialog.setTitle("Przepis")
+            alertDialog.setMessage("Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis ")
+            alertDialog.setButton(
+                AlertDialog.BUTTON_NEUTRAL,
+                "Back"
+            ) { dialog, _ -> dialog.dismiss() }
+            alertDialog.show()
         }
     }
 }
