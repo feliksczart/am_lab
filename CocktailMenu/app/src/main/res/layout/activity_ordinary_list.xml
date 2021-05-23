@@ -30,9 +30,17 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_main"
+        android:name="com.example.cocktailmenu.MainFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container"
         android:name="com.example.cocktailmenu.CocktailListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 </LinearLayout>

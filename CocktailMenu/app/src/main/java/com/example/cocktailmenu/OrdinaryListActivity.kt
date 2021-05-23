@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentContainerView
 import com.google.android.material.appbar.MaterialToolbar
 
-//https://stackoverflow.com/questions/32700818/how-to-open-a-fragment-on-button-click-from-a-fragment-in-android
 @Suppress("DEPRECATION")
 class OrdinaryListActivity : AppCompatActivity(), CocktailListFragment.Listener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,6 +17,8 @@ class OrdinaryListActivity : AppCompatActivity(), CocktailListFragment.Listener 
         supportActionBar?.hide()
 
         val topAppBar = findViewById<MaterialToolbar>(R.id.topAppBar)
+        val mainFrag = findViewById<FragmentContainerView>(R.id.fragment_container_main)
+        val ordinaryFrag = findViewById<FragmentContainerView>(R.id.fragment_container)
 
         topAppBar.setNavigationOnClickListener {
             // Handle navigation icon press
@@ -25,18 +27,19 @@ class OrdinaryListActivity : AppCompatActivity(), CocktailListFragment.Listener 
         topAppBar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.ic_mainScreen -> {
-                    true
-                }
-                R.id.icCocktails -> {
-                    // Handle search icon press
-                    true
+                    mainFrag.visibility = View.VISIBLE
+                    ordinaryFrag.visibility = View.GONE
                 }
                 R.id.icOrdinary -> {
-                    // Handle more item (inside overflow menu) press
-                    true
+                    mainFrag.visibility = View.GONE
+                    ordinaryFrag.visibility = View.VISIBLE
                 }
-                else -> false
+                R.id.icCocktails -> {
+                    mainFrag.visibility = View.GONE
+                    ordinaryFrag.visibility = View.VISIBLE
+                }
             }
+            true
         }
     }
 
