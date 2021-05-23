@@ -16,12 +16,34 @@ class DetailActivity : AppCompatActivity() {
         val EXTRA_COCKTAIL_ID = "id"
     }
 
+    var inRecipe = false
+    lateinit var alertDialog: AlertDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
         supportActionBar?.hide()
+
+        if (savedInstanceState != null) {
+            inRecipe = savedInstanceState.getBoolean("inRecipe")
+            if (inRecipe){
+                alertDialog = AlertDialog.Builder(this).create()
+                inRecipe = true
+                alertDialog.setTitle("Przepis")
+                alertDialog.setMessage(
+                    "Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis "
+                )
+                alertDialog.setButton(
+                    AlertDialog.BUTTON_NEUTRAL,
+                    "Back"
+                ) { dialog, _ -> dialog.dismiss()
+                    inRecipe = false
+                }
+                alertDialog.show()
+            }
+        }
 
         val frag =
             supportFragmentManager.findFragmentById(R.id.detail_frag) as CocktailDetailFragment?
@@ -55,14 +77,25 @@ class DetailActivity : AppCompatActivity() {
         val fab = findViewById<FloatingActionButton>(R.id.fab)
 
         fab.setOnClickListener {
-            val alertDialog: AlertDialog = AlertDialog.Builder(this).create()
+            alertDialog = AlertDialog.Builder(this).create()
+            inRecipe = true
             alertDialog.setTitle("Przepis")
-            alertDialog.setMessage("Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis ")
+            alertDialog.setMessage(
+                "Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis "
+            )
             alertDialog.setButton(
                 AlertDialog.BUTTON_NEUTRAL,
                 "Back"
-            ) { dialog, _ -> dialog.dismiss() }
+            ) { dialog, _ -> dialog.dismiss()
+                inRecipe = false
+            }
             alertDialog.show()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        if (inRecipe) alertDialog.dismiss()
+        outState.putBoolean("inRecipe",inRecipe)
     }
 }

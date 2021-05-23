@@ -1,24 +1,21 @@
 package com.example.cocktailmenu
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleObserver
 import com.google.android.material.appbar.MaterialToolbar
 
 @Suppress("DEPRECATION", "UNREACHABLE_CODE")
-class OrdinaryListActivity : AppCompatActivity(), CocktailListFragment.Listener, LifecycleObserver {
+class MainActivity : AppCompatActivity(), CocktailListFragment.Listener, LifecycleObserver {
 
     lateinit var mMyFragment: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_ordinary_list)
+        setContentView(R.layout.activity_main)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         actionBar?.hide()
         supportActionBar?.hide()
