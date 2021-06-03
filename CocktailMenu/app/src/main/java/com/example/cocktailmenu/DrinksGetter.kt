@@ -16,6 +16,8 @@ class DrinksGetter(private val activity: LauncherActivity) :
         val cocktails = ArrayList<Cocktail>()
     }
 
+    var ctr = -1
+
     override fun doInBackground(vararg params: Void?): ArrayList<Cocktail>? {
         val drinks: ArrayList<Cocktail> = arrayListOf()
         for (i in 0..1){
@@ -87,12 +89,13 @@ class DrinksGetter(private val activity: LauncherActivity) :
     private fun getDrinkByName(response: String, name: String): Cocktail {
         val jsonObject = JSONObject(response)
         val cocktailDetails = jsonObject.get("drinks") as JSONArray
-
+        ctr += 1
         return Cocktail(
             name,
             (cocktailDetails[0] as JSONObject).getString("strInstructionsDE"),
             (cocktailDetails[0] as JSONObject).getString("strAlcoholic"),
-            (cocktailDetails[0] as JSONObject).getString("strInstructions")
+            (cocktailDetails[0] as JSONObject).getString("strInstructions"),
+            ctr
         )
     }
 

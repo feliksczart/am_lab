@@ -32,19 +32,22 @@ class CocktailListFragment : Fragment() {
         val fragview: RecyclerView =
             inflater.inflate(R.layout.recycler2, container, false) as RecyclerView
 
-        val names = arrayOfNulls<String>(DrinksGetter.cocktails.size/2)
+        val names = arrayOfNulls<String>(DrinksGetter.cocktails.size / 2)
+        val cocktailImages = arrayOfNulls<Int>(DrinksGetter.cocktails.size / 2)
         if (!MainActivity.ORD_LOADED) {
             for (i in names.indices) {
                 names[i] = DrinksGetter.cocktails[i].getName()
+                cocktailImages[i] = DrinksGetter.cocktails[i].getImageResourceId()
             }
-        } else{
+        } else {
             for (i in names.indices) {
-                names[i] = DrinksGetter.cocktails[i+10].getName()
+                names[i] = DrinksGetter.cocktails[i + 10].getName()
+                cocktailImages[i] = DrinksGetter.cocktails[i + 10].getImageResourceId()
             }
         }
 
         val gridManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-        myAdapter = CustomAdapter(names, null)
+        myAdapter = CustomAdapter(names, cocktailImages)
         fragview.adapter = myAdapter
         fragview.layoutManager = gridManager
         fragview.hasFixedSize()
@@ -61,7 +64,7 @@ class CocktailListFragment : Fragment() {
         listener = context as Listener
     }
 
-    fun addClickListener(recycler: RecyclerView){
+    fun addClickListener(recycler: RecyclerView) {
         recycler.addOnItemTouchListener(
             RecyclerItemClickListenr(
                 context,

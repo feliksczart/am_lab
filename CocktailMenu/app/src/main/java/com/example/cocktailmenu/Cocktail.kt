@@ -4,7 +4,8 @@ class Cocktail(
     var name: String,
     var details: String,
     var alcoholic: String,
-    var recipe: String
+    var recipe: String,
+    var imageId: Int
 ) {
 
     @JvmName("getRecipe1")
@@ -25,6 +26,11 @@ class Cocktail(
     @JvmName("getAlco1")
     fun getAlco(): String {
         return alcoholic
+    }
+
+    @JvmName("getImageId1")
+    fun getImageResourceId(): Int {
+        return imageId
     }
 
     override fun toString(): String {

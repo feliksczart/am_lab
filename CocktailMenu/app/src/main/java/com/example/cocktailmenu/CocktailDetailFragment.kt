@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 
@@ -32,10 +34,27 @@ class CocktailDetailFragment : Fragment() {
         if (view != null) {
             val title = view.findViewById<View>(R.id.textTitle) as TextView
             val cocktail: Cocktail
-            if (!MainActivity.ORD_LOADED_DETAILS) {
+            val imageView: ImageView = view.findViewById(R.id.imagedtl)
+            if (MainActivity.CURR_CARD == "ord") {
                 cocktail = DrinksGetter.cocktails[cocktailId.toInt()]
+                val id = cocktailId.toInt()
+                val img = view.context.resources.getIdentifier(
+                    "a$id",
+                    "drawable",
+                    view.context.packageName
+                )
+                val drawable = ContextCompat.getDrawable(view.context, img)
+                imageView.setImageDrawable(drawable)
             } else{
                 cocktail = DrinksGetter.cocktails[cocktailId.toInt()+10]
+                val id = cocktailId.toInt()+10
+                val img = view.context.resources.getIdentifier(
+                    "a$id",
+                    "drawable",
+                    view.context.packageName
+                )
+                val drawable = ContextCompat.getDrawable(view.context, img)
+                imageView.setImageDrawable(drawable)
             }
             MainActivity.ORD_LOADED_DETAILS = true
             title.text = cocktail.getName()

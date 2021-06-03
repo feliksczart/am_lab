@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:id="@+id/fragment_container"-->
-<!--    android:name="com.example.cocktailmenu.CocktailListFragment"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent" />-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:ignore="DisableBaselineAlignment">
 
@@ -36,7 +32,7 @@
             app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/ic_nav"
             app:title="@string/page_title"
-            app:titleTextColor="#000000"/>
+            app:titleTextColor="#000000" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -52,8 +48,8 @@
         android:name="com.example.cocktailmenu.CocktailListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:layout_marginTop="55dp"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <androidx.fragment.app.FragmentContainerView
@@ -61,8 +57,8 @@
         android:name="com.example.cocktailmenu.CocktailListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:layout_marginTop="55dp"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </RelativeLayout>
