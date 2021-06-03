@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), CocktailListFragment.Listener, Lifecyc
         }
 
         topAppBar.setNavigationOnClickListener {
-            // Handle navigation icon press
+
         }
 
         topAppBar.setOnMenuItemClickListener { menuItem ->

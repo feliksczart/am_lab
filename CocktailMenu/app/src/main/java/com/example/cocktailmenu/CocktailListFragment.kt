@@ -1,23 +1,22 @@
 package com.example.cocktailmenu
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ListAdapter
-import android.widget.ListView
-import android.widget.RelativeLayout
+import android.widget.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.ListFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.properties.Delegates
 
 
-class CocktailListFragment : ListFragment() {
+class CocktailListFragment : Fragment() {
 
-    var myrv: RecyclerView? = null
     private var myAdapter: RecyclerView.Adapter<*>? = null
     var isEditing: Boolean = false
     var IS_EDITING_KEY by Delegates.notNull<Boolean>()
@@ -25,32 +24,31 @@ class CocktailListFragment : ListFragment() {
     interface Listener {
         fun itemClicked(id: Long)
     }
+
     private var listener: Listener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
-        //TODO GRID
-        //val rootView: View = inflater.inflate(android.R.layout.activity_list_item, container, false)
-        val rootViewx: View? = super.onCreateView(inflater, container, savedInstanceState)
+        val fragview: RecyclerView =
+            inflater.inflate(R.layout.recycler2, container, false) as RecyclerView
 
         val names = arrayOfNulls<String>(Cocktail.cocktails.size)
         for (i in names.indices) {
             names[i] = Cocktail.cocktails[i].getName()
         }
-        val adapter: Any = ArrayAdapter<Any?>(
-            inflater.context, android.R.layout.simple_list_item_1, names
-        )
-        listAdapter = adapter as ListAdapter?
 
-//        myrv = rootView.findViewById(R.id.recycle_view)
-//        myAdapter = CustomAdapter(names)
-//        myrv!!.layoutManager = GridLayoutManager(context, 3)
-//        myrv!!.adapter = myAdapter
+        val gridManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+        myAdapter = CustomAdapter(names, null)
+        fragview.adapter = myAdapter
+        fragview.layoutManager = gridManager
+        fragview.hasFixedSize()
 
-        return rootViewx
+        addClickListener(fragview)
+
+        return fragview
     }
 
     override fun onAttach(context: Context) {
@@ -58,7 +56,18 @@ class CocktailListFragment : ListFragment() {
         listener = context as Listener
     }
 
-    override fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
-        listener?.itemClicked(id)
+    fun addClickListener(recycler: RecyclerView){
+        recycler.addOnItemTouchListener(
+            RecyclerItemClickListenr(
+                context,
+                recycler,
+                object : RecyclerItemClickListenr.OnItemClickListener {
+                    override fun onItemClick(view: View, position: Int) {
+                        val intent = Intent(context, DetailActivity::class.java)
+                        intent.putExtra(DetailActivity.EXTRA_COCKTAIL_ID, position)
+                        startActivity(intent)
+                    }
+                })
+        )
     }
 }
