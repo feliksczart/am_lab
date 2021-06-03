@@ -13,6 +13,12 @@ class MainActivity : AppCompatActivity(), CocktailListFragment.Listener, Lifecyc
 
     lateinit var mMyFragment: String
 
+    companion object{
+        var ORD_LOADED: Boolean = false
+        var ORD_LOADED_DETAILS: Boolean = false
+        var CURR_CARD = ""
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,6 +29,8 @@ class MainActivity : AppCompatActivity(), CocktailListFragment.Listener, Lifecyc
         val topAppBar = findViewById<MaterialToolbar>(R.id.topAppBar)
         val mainFrag = findViewById<FragmentContainerView>(R.id.fragment_container_main)
         val ordinaryFrag = findViewById<FragmentContainerView>(R.id.fragment_container)
+        val cocktailFrag = findViewById<FragmentContainerView>(R.id.fragment_container_cocktail)
+
         mMyFragment = "main"
 
         if (savedInstanceState != null) {
@@ -30,13 +38,19 @@ class MainActivity : AppCompatActivity(), CocktailListFragment.Listener, Lifecyc
             if (mMyFragment == "main"){
                 mainFrag.visibility = View.VISIBLE
                 ordinaryFrag.visibility = View.GONE
+                cocktailFrag.visibility = View.GONE
+                CURR_CARD = "main"
             } else if (mMyFragment == "ord"){
                 mainFrag.visibility = View.GONE
                 ordinaryFrag.visibility = View.VISIBLE
+                cocktailFrag.visibility = View.GONE
+                CURR_CARD = "ord"
             }
             else if (mMyFragment == "cock"){
                 mainFrag.visibility = View.GONE
-                ordinaryFrag.visibility = View.VISIBLE
+                ordinaryFrag.visibility = View.GONE
+                cocktailFrag.visibility = View.VISIBLE
+                CURR_CARD = "cock"
             }
         }
 
@@ -49,17 +63,23 @@ class MainActivity : AppCompatActivity(), CocktailListFragment.Listener, Lifecyc
                 R.id.ic_mainScreen -> {
                     mainFrag.visibility = View.VISIBLE
                     ordinaryFrag.visibility = View.GONE
+                    cocktailFrag.visibility = View.GONE
                     mMyFragment = "main"
+                    CURR_CARD = "main"
                 }
                 R.id.icOrdinary -> {
                     mainFrag.visibility = View.GONE
                     ordinaryFrag.visibility = View.VISIBLE
+                    cocktailFrag.visibility = View.GONE
                     mMyFragment = "ord"
+                    CURR_CARD = "ord"
                 }
                 R.id.icCocktails -> {
                     mainFrag.visibility = View.GONE
-                    ordinaryFrag.visibility = View.VISIBLE
+                    ordinaryFrag.visibility = View.GONE
+                    cocktailFrag.visibility = View.VISIBLE
                     mMyFragment = "cock"
+                    CURR_CARD = "cock"
                 }
             }
             true

@@ -12,4 +12,6 @@
     <string name="appdesc">Aplikacja składa się z trzech kart. Jest to książka barmańska, czyli książką z przepisami na koktajle. Pierwsza karta jest kartą główną aplikacji, a pozostałe są kartami kategorii. W przypadku książki barmańskiej karta główna informuje o przeznaczeniu aplikacji, a karty kategorii dotyczą drinków zwykłych i koktajli.</string>
     <string name="submit">Submit</string>
     <string name="todo">TODO</string>
+    <string name="cocktailapp">CocktailApp</string>
+    <string name="loading_data">Loading Data</string>
 </resources>

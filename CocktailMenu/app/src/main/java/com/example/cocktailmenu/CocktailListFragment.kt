@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
-import androidx.fragment.app.ListFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlin.properties.Delegates
@@ -18,7 +15,7 @@ import kotlin.properties.Delegates
 class CocktailListFragment : Fragment() {
 
     private var myAdapter: RecyclerView.Adapter<*>? = null
-    var isEditing: Boolean = false
+    var ordLoaded: Boolean = false
     var IS_EDITING_KEY by Delegates.notNull<Boolean>()
 
     interface Listener {
@@ -35,9 +32,15 @@ class CocktailListFragment : Fragment() {
         val fragview: RecyclerView =
             inflater.inflate(R.layout.recycler2, container, false) as RecyclerView
 
-        val names = arrayOfNulls<String>(Cocktail.cocktails.size)
-        for (i in names.indices) {
-            names[i] = Cocktail.cocktails[i].getName()
+        val names = arrayOfNulls<String>(DrinksGetter.cocktails.size/2)
+        if (!MainActivity.ORD_LOADED) {
+            for (i in names.indices) {
+                names[i] = DrinksGetter.cocktails[i].getName()
+            }
+        } else{
+            for (i in names.indices) {
+                names[i] = DrinksGetter.cocktails[i+10].getName()
+            }
         }
 
         val gridManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
@@ -47,6 +50,8 @@ class CocktailListFragment : Fragment() {
         fragview.hasFixedSize()
 
         addClickListener(fragview)
+
+        MainActivity.ORD_LOADED = true
 
         return fragview
     }

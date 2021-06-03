@@ -31,10 +31,16 @@ class CocktailDetailFragment : Fragment() {
         val view = view
         if (view != null) {
             val title = view.findViewById<View>(R.id.textTitle) as TextView
-            val cocktail: Cocktail = Cocktail.cocktails[cocktailId.toInt()]
+            val cocktail: Cocktail
+            if (!MainActivity.ORD_LOADED_DETAILS) {
+                cocktail = DrinksGetter.cocktails[cocktailId.toInt()]
+            } else{
+                cocktail = DrinksGetter.cocktails[cocktailId.toInt()+10]
+            }
+            MainActivity.ORD_LOADED_DETAILS = true
             title.text = cocktail.getName()
             val description = view.findViewById<View>(R.id.textDescription) as TextView
-            description.text = cocktail.getRecipe()
+            description.text = cocktail.getDetails()
         }
     }
 

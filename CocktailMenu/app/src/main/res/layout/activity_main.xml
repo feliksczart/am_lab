@@ -4,7 +4,7 @@
 <!--    android:name="com.example.cocktailmenu.CocktailListFragment"-->
 <!--    android:layout_width="match_parent"-->
 <!--    android:layout_height="match_parent" />-->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -52,6 +52,17 @@
         android:name="com.example.cocktailmenu.CocktailListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_marginTop="55dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-</LinearLayout>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_cocktail"
+        android:name="com.example.cocktailmenu.CocktailListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:layout_marginTop="55dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+</RelativeLayout>

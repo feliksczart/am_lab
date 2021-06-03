@@ -1,6 +1,5 @@
 package com.example.cocktailmenu
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -26,15 +25,15 @@ class DetailActivity : AppCompatActivity() {
         actionBar?.hide()
         supportActionBar?.hide()
 
+        val cocktailId = intent.extras!![EXTRA_COCKTAIL_ID] as Int
+
         if (savedInstanceState != null) {
             inRecipe = savedInstanceState.getBoolean("inRecipe")
             if (inRecipe){
                 alertDialog = AlertDialog.Builder(this).create()
                 inRecipe = true
                 alertDialog.setTitle("Przepis")
-                alertDialog.setMessage(
-                    "Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis "
-                )
+                alertDialog.setMessage(DrinksGetter.cocktails[cocktailId].recipe)
                 alertDialog.setButton(
                     AlertDialog.BUTTON_NEUTRAL,
                     "Back"
@@ -48,7 +47,6 @@ class DetailActivity : AppCompatActivity() {
         val frag =
             supportFragmentManager.findFragmentById(R.id.detail_frag) as CocktailDetailFragment?
 
-        val cocktailId = intent.extras!![EXTRA_COCKTAIL_ID] as Int
         frag!!.setCocktail(cocktailId)
 
         val topAppBar = findViewById<MaterialToolbar>(R.id.topAppBarDetails)
@@ -80,9 +78,10 @@ class DetailActivity : AppCompatActivity() {
             alertDialog = AlertDialog.Builder(this).create()
             inRecipe = true
             alertDialog.setTitle("Przepis")
-            alertDialog.setMessage(
-                "Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis PrzepisPrzepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis Przepis "
-            )
+            if (MainActivity.CURR_CARD == "ord")
+                alertDialog.setMessage(DrinksGetter.cocktails[cocktailId].recipe)
+            else if (MainActivity.CURR_CARD == "cock")
+                alertDialog.setMessage(DrinksGetter.cocktails[cocktailId+10].recipe)
             alertDialog.setButton(
                 AlertDialog.BUTTON_NEUTRAL,
                 "Back"
