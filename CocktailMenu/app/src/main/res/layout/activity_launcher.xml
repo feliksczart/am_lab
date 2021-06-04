@@ -1,68 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LauncherActivity">
 
-    <TextView
-        android:id="@+id/fullscreen_content"
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_top"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="-1dp"
+        android:src="@drawable/ic_top"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/cocktailapp"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+        android:padding="16dp">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:id="@+id/iv_heart"
+            android:adjustViewBounds="true"
+            android:src="@drawable/ic_heart"/>
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:orientation="horizontal"
-            tools:ignore="RtlHardcoded,UselessParent">
+            android:id="@+id/lan_text"
+            android:textSize="48sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:textColor="#000000"/>
 
-        </LinearLayout>
-
-        <RelativeLayout
-            android:id="@+id/loadingPanel"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom|center">
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_beat"
+            android:adjustViewBounds="true"/>
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/loading_data"
-                    android:textSize="18sp" />
-
-                <ProgressBar
-                    android:id="@+id/loading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:indeterminate="true"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="30dp"
-                    tools:ignore="UnusedAttribute" />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </FrameLayout>
-
-</FrameLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/iv_bot"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_bot"
+        android:layout_marginBottom="-1dp"/>
+</RelativeLayout>
